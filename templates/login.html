@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <title>Login</title>
+    </head>
+    <body>
+        <h1> Please Login</h1>
+        <form method="post">
+            {{ form.type }}
+            {{ form.username }}
+            {{ form.password }}
+            {{ form.submit }}
+        </form>
+        <p>Don't have an account? <a href="/register">Register now!</a></p>
+    </body>
+</html>
