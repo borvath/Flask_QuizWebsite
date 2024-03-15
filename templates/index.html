@@ -1,10 +1,30 @@
-<!DOCTYPE html>
-<html lang="en-US">
-    <head>
-        <title>Home Page</title>
-        <link href="../static/homepage.css" rel="stylesheet">
-    </head>
-    <body>
-        <h1>Welcome to Quiz Maker</h1>
-    </body>
-</html>
+{% extends "layout.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}" />
+{% endblock %}
+{% block title %}Home{% endblock %}
+
+{% block header %}
+    <nav>
+        <menu>
+            {% if session['user_type'] == 'admin' %}
+                <li><a href="/"></a>Home</li>
+                <li><a href="/class"></a>View Classes</li>
+                <li><a href="/quizzes"></a>View Quizzes</li>
+                <li><a href="/quiz-creator"></a>View Users</li>
+            {% endif %}
+            {% if session['user_type'] in ['student', 'teacher'] %}
+                <li><a href="/"></a>Home</li>
+                <li><a href="/classes"></a>Your Classes</li>
+                <li><a href="/quizzes"></a>View Quizzes</li>
+                <li><a href="/quiz-creator"></a>Create New Quiz</li>
+            {% endif %}
+        </menu>
+    </nav>
+{% endblock %}
+
+{% block main %}
+
+{% endblock %}

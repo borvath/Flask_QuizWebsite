@@ -1,17 +1,23 @@
-<!DOCTYPE html>
-<html lang="en-US">
-    <head>
-        <title>Register</title>
-    </head>
-    <body>
-        <h1> Create an Account</h1>
-        <form method="post">
-            {{ form.type }}
-            {{ form.first_name }}
-            {{ form.last_name }}
-            {{ form.username }}
-            {{ form.password }}
-            {{ form.submit }}
-        </form>
-    </body>
-</html>
+{% extends "layout.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/login.css') }}" />
+{% endblock %}
+{% block title %}Register{% endblock %}
+
+{% block header %}
+    <h1>Create an Account</h1>
+{% endblock %}
+
+{% block main %}
+    <form method="post">
+        {{ form.type }}
+        {{ form.first_name }}
+        {{ form.last_name }}
+        {{ form.username }}
+        {{ form.password }}
+        {{ form.submit }}
+    </form>
+    <p>Already have an account? <a href="/login">Login now!</a></p>
+{% endblock %}
