@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = f'{environ['MYSQL_PASS']}'
+app.config['MYSQL_PASSWORD'] = f"{environ['MYSQL_PASS']}"
 app.config['MYSQL_DB'] = 'quizmaker'
 app.config['SECRET_KEY'] = 'Hey'
 
