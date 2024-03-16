@@ -2,7 +2,7 @@
 
 # Run this script using source (e.g. source setup.sh)
 # If `source` is not used, the venv activate script will not apply to your current shell.
-# To source it manually, run: <envname>/bin/activate  (where <envname> is the local environment directory)
+# To source it manually, run: source <envname>/bin/activate  (where <envname> is the local environment directory)
 
 envname=pyenv
 dependencies=requirements.txt
