@@ -3,7 +3,7 @@ from wtforms import SelectField, StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length
 
 PASSWORD_MIN_SIZE = 6
-PASSWORD_MAX_SIZE = 255
+PASSWORD_MAX_SIZE = 71
 
 USERNAME_MIN_SIZE = 6
 USERNAME_MAX_SIZE = 100
@@ -20,12 +20,12 @@ class RegisterForm(FlaskForm):
     )
     first_name = StringField(
         label='first_name',
-        validators=[InputRequired(), Length(min=0, max=FIRST_NAME_MAX_SIZE)],
+        validators=[InputRequired(), Length(min=1, max=FIRST_NAME_MAX_SIZE)],
         render_kw={"placeholder": "John"}
     )
     last_name = StringField(
         label='last_name',
-        validators=[InputRequired(), Length(min=0, max=LAST_NAME_MAX_SIZE)],
+        validators=[InputRequired(), Length(min=1, max=LAST_NAME_MAX_SIZE)],
         render_kw={"placeholder": "Smith"}
     )
     username = StringField(
