@@ -21,7 +21,7 @@ except mysql.connector.Error as err:
     exit(-1)
 
 
-def execute_select(query: str, values: tuple, num_results: int = 0):
+def execute_select_statement(query: str, values: tuple, num_results: int = 0):
     with db.cursor(dictionary=True) as cursor:
         cursor.execute(query, values)
         if num_results == 0:
@@ -36,7 +36,7 @@ def execute_select(query: str, values: tuple, num_results: int = 0):
     return results
 
 
-def execute_insert(query, values):
+def execute_non_select_statement(query, values):
     with db.cursor(dictionary=True) as cursor:
         cursor.execute(query, values)
         if cursor.fetchwarnings() is not None:
