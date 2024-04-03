@@ -8,24 +8,37 @@
 
 {% block header %}
     <nav>
-        <menu>
+                <a href="/"><img src="{{ url_for('static', filename='images/light.ico') }}" alt="logo" /></a>
+                <div class = "logo">QUIZ </div>
             {% if session['user_type'] == 'admin' %}
-                <li><a href="/"></a>Home</li>
-                <li><a href="/class"></a>View Classes</li>
-                <li><a href="/quizzes"></a>View Quizzes</li>
-                <li><a href="/quiz-creator"></a>View Users</li>
+                <a href="/"></a>Home
+                <a href="/class"></a>View Classes
+                <a href="/quizzes"></a>View Quizzes
+                <a href="/quiz-creator"></a>View Users
             {% endif %}
             {% if session['user_type'] in ['student', 'teacher'] %}
-                <li><a href="/"></a>Home</li>
-                <li><a href="/classes"></a>Your Classes</li>
-                <li><a href="/quizzes"></a>View Quizzes</li>
-                <li><a href="/quiz-creator"></a>Create New Quiz</li>
+            <a href="/">Home</a>
+            <a href="/classes">Your Classes</a>
+            <a href="/quizzes">View Quizzes</a>
+            <a href="/quiz-creator">Create New Quiz</a>
+            
             {% endif %}
-            <li><a href="{{ url_for("logout") }}">Logout</a></li>
-        </menu>
+            <a href="{{ url_for("logout") }}">Logout</a>
     </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Quiz</h1>
+            <p>Take a quiz or create your own</p>
+        </div>
 {% endblock %}
 
 {% block main %}
 
+{% endblock %}
+
+{% block footer %}
+    <footer>
+        <p>Created by Ben, Brian, Aditi, Anoushka, and Shelley</p>
+    </footer>
 {% endblock %}
