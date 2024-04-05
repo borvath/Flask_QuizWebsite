@@ -48,5 +48,9 @@ def logout():
     return redirect(url_for("index"))
 
 
+@app.route('/quiz-creator')
+def quiz_creator():
+    return render_template('createQuiz.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
