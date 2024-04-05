@@ -8,20 +8,20 @@
 
 {% block header %}
     <nav>
-                <a href="/"><img src="{{ url_for('static', filename='images/light.ico') }}" alt="logo" /></a>
+                <a href="/CEN4521-QuizWebsite/static"><img src="{{ url_for('static', filename='images/light.ico') }}" alt="logo" /></a>
                 <div class = "logo">QUIZ </div>
             {% if session['user_type'] == 'admin' %}
-                <a href="/"></a>Home
+                <a href="/CEN4521-QuizWebsite/static"></a>Home
                 <a href="/class"></a>View Classes
                 <a href="/quizzes"></a>View Quizzes
                 <a href="{{ url_for("admin.view_users") }}">View Users</a>
             {% endif %}
             {% if session['user_type'] in ['student', 'teacher'] %}
-            <a href="/">Home</a>
+            <a href="/CEN4521-QuizWebsite/static">Home</a>
             <a href="/classes">Your Classes</a>
             <a href="/quizzes">View Quizzes</a>
             <a href="/quiz-creator">Create New Quiz</a>
-            
+
             {% endif %}
             <a href="{{ url_for("logout") }}">Logout</a>
     </nav>
@@ -34,7 +34,23 @@
 {% endblock %}
 
 {% block main %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/table.css') }}" />
+    <p>This is a test.</p>
+    <table>
+        <tr>
+            {% for header in headings %}
+                <th>{{ header }}</th>
+            {% endfor %}
+        </tr>
 
+        {% for user in users %}
+            <tr>
+                {% for key, value in user.items() %}
+                   <td>{{ value }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}
 
 {% block footer %}
