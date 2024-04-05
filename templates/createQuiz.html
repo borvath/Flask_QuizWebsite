@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Creator</title>
+</head>
+<body>
+    <h1>Quiz Creator</h1>
+
+    <div id="question-container">
+        <h2 class="question-header">Question:</h2>
+        <div class="question">
+            <label class="question-text-label"><textarea class="question-text" id="question-text"></textarea></label>
+        </div>
+    </div>
+
+    <div id="answer-container">
+        <h2 class="question-header">Answer Choices:</h2>
+        <div class="answer">
+            <label class="answer-select">
+                <input type="radio" name="answer" class="answer-choice">
+            </label>
+            <label class="answer-text-label">
+                <textarea class="answer-text" id="text-answer-1"></textarea>
+            </label>
+            <button type="button" class="delete-answer" onclick="this.parentNode.remove()">X</button>
+        </div>
+    </div>
+
+    <button type="button" id="new-answer-choice" onclick="newAnswer()">Add Answer Choice</button>
+    <button type="button" id="submit-question" onclick="saveQuestion()">Submit Question</button>
+
+    <script>
+        function newAnswer() {
+            const answerContainer = document.getElementById("answer-container");
+            const answerField = document.createElement('div');
+            answerField.className = 'answer';
+            answerField.innerHTML = `
+                <label class="answer-select">
+                    <input type="radio" name="answer" class="answer-choice">
+                </label>
+                <label class="answer-text-label">
+                    <textarea class="answer-text" id="text-answer-${answerContainer.children.length + 1}"></textarea>
+                </label>
+                <button type="button" class="delete-answer" onclick="this.parentNode.remove()">X</button>`;
+            answerContainer.appendChild(answerField);
+        }
+
+        function saveQuestion() {
+            const questionText = document.getElementById("question-text").value.trim();
+            const answerChoices = document.querySelectorAll('.answer-text');
+            const correctAnswerIndex = Array.from(document.querySelectorAll('.answer-choice')).findIndex(choice => choice.checked);
+
+            if (questionText === '') {
+                alert("Please input something into the question area");
+                return;
+            }
+
+            if (correctAnswerIndex === -1) {
+                alert("Please select the correct answer before saving question");
+                return;
+            }
+
+            const answerTexts = Array.from(answerChoices).map(answer => answer.value.trim());
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "/save_question", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    alert("Question saved successfully");
+                    resetForm();
+                }
+            };
+            xhr.send(JSON.stringify({ question: questionText, answers: answerTexts, correct_answer: correctAnswerIndex }));
+        }
+
+        function resetForm() {
+            document.getElementById("question-text").value = '';
+            document.querySelectorAll('.answer').forEach(answer => answer.remove());
+            newAnswer(); // Add one new answer choice
+        }
+    </script>
+</body>
+</html>
