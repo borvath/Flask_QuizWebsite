@@ -9,6 +9,6 @@ admin_bp = Blueprint('admin', __name__)
 def view_users():
     """Renders page where admins can view users that exist in the database."""
     query = "SELECT id, username, last_name, first_name, type FROM user;"
-    result = execute_select_statement(query)
+    result = execute_select_statement(query, None)
     headings = ["ID", "Username", "Last Name", "First Name", "Type"]
     return render_template('admin_pages/view_users.html', users=result, headings=headings)
