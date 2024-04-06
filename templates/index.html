@@ -7,30 +7,7 @@
 {% block title %}Home{% endblock %}
 
 {% block header %}
-    <nav>
-                <a href="/"><img src="{{ url_for('static', filename='images/light.ico') }}" alt="logo" /></a>
-                <div class = "logo">QUIZ </div>
-            {% if session['user_type'] == 'admin' %}
-                <a href="/"></a>Home
-                <a href="/class"></a>View Classes
-                <a href="/quizzes"></a>View Quizzes
-                <a href="{{ url_for("admin.view_users") }}">View Users</a>
-            {% endif %}
-            {% if session['user_type'] in ['student', 'teacher'] %}
-            <a href="/">Home</a>
-            <a href="/classes">Your Classes</a>
-            <a href="/quizzes">View Quizzes</a>
-            <a href="/quiz-creator">Create New Quiz</a>
-            
-            {% endif %}
-            <a href="{{ url_for("logout") }}">Logout</a>
-    </nav>
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Welcome to Quiz</h1>
-            <p>Take a quiz or create your own</p>
-        </div>
+   {{ super() }}
 {% endblock %}
 
 {% block main %}
@@ -38,7 +15,5 @@
 {% endblock %}
 
 {% block footer %}
-    <footer>
-        <p>Created by Ben, Brian, Aditi, Anoushka, and Shelley</p>
-    </footer>
+    {{ super() }}
 {% endblock %}
