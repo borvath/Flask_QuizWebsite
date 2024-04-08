@@ -11,31 +11,7 @@
     </head>
     <body>
         <header id="common-header">
-            {% block header %}
-             <nav>
-                <a href="/"><img src="{{ url_for('static', filename='images/light.ico') }}" alt="logo" /></a>
-                <div class = "logo">QUIZ</div>
-                {% if session['user_type'] == 'admin' %}
-                    <a href="/">Home</a>
-                    <a href="/class">View Classes</a>
-                    <a href="/quizzes">View Quizzes</a>
-                    <a href="{{ url_for("admin.view_users") }}">View Users</a>
-                {% endif %}
-                {% if session['user_type'] in ['student', 'teacher'] %}
-                    <a href="/">Home</a>
-                    <a href="/classes">Your Classes</a>
-                    <a href="/quizzes">View Quizzes</a>
-                    <a href="/quiz-creator">Create New Quiz</a>
-                {% endif %}
-                <a href="{{ url_for("logout") }}">Logout</a>
-            </nav>
-                <section class="hero">
-                    <div class="hero-content">
-                        <h1>Welcome to Quiz</h1>
-                        <p>Take a quiz or create your own</p>
-                    </div>
-                </section>
-            {% endblock %}
+            {% block header %}{% endblock %}
         </header>
         <main id="common-main">
             {% block main %}{% endblock %}
