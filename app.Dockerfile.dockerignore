@@ -1,0 +1,17 @@
+# Git
+.git
+.gitignore
+
+# Database
+*.sql
+db.*
+
+# Other
+__pycache__
+README.md
+setup.sh
+app.Dockerfile.dockerignore
+
+*.txt
+!requirements.txt
+

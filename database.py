@@ -5,10 +5,10 @@ from mysql.connector import errorcode, connect
 
 try:
     db_config = {
-        'host': 'localhost',
+        'host': 'mysql-db',
         'user': 'root',
         'password': f'{environ['MYSQL_PASS']}',
-        'database': 'quizmaker'
+        'database': 'QuizMaker'
     }
     db = connect(**db_config)
 except mysql.connector.Error as err:
