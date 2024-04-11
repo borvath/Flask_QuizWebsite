@@ -1,3 +1,4 @@
+New Quizzes
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,110 +19,87 @@
         <textarea id="quiz-description"></textarea>
     </div>
 
-    <div id="question-container">
-        <h2 class="question-header">Question:</h2>
-        <div class="question">
-            <label class="question-text-label"><textarea class="question-text" id="question-text"></textarea></label>
-        </div>
+    <div id="questions-container">
+        <!-- Questions will be added here dynamically -->
     </div>
 
-    <div id="answer-container">
-        <h2 class="question-header">Answer Choices:</h2>
-        <div class="answer">
-            <label class="answer-select">
-                <input type="radio" name="answer" class="answer-choice">
-            </label>
-            <label class="answer-text-label">
-                <textarea class="answer-text" id="text-answer-1"></textarea>
-            </label>
-            <button type="button" class="delete-answer" onclick="this.parentNode.remove()">X</button>
-        </div>
-    </div>
-
-    <button type="button" id="new-answer-choice" onclick="newAnswer()">Add Answer Choice</button>
-    <button type="button" id="submit-question" onclick="saveQuestion()">Submit Question</button>
     <button type="button" id="add-new-question" onclick="newQuestion()">Add New Question</button>
-    <button type="button" id="reset-form" onclick="resetForm()">Reset Form</button>
-    <script>
+    <button type="button" id="reset-form" onclick="resetForm()">Reset All</button>
+    <button type="button" id="save-quiz" onclick="saveQuiz()">Save Quiz</button>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            newQuestion(); // Initialize with one question
+        });
 
         function newQuestion() {
-            const questionContainer = document.getElementById("question-container");
-            const answerContainer = document.getElementById("answer-container");
-            const newQuestionContainer = questionContainer.cloneNode(true);
-        
-            // Update IDs and names to avoid duplicates
-            const newQuestionId = `question-text-${questionContainer.children.length + 1}`;
-            newQuestionContainer.querySelector(".question-text").id = newQuestionId;
-        
-            const answerChoices = newQuestionContainer.querySelectorAll('.answer-choice');
-            answerChoices.forEach((choice, index) => {
-                const newChoiceName = `answer-${newQuestionId}`;
-                choice.name = newChoiceName;
-            });
-        
-            const answerTexts = newQuestionContainer.querySelectorAll('.answer-text');
-            answerTexts.forEach((text, index) => {
-                const newTextId = `text-answer-${newQuestionId}-${index + 1}`;
-                text.id = newTextId;
-            });
-
-
-        
-            questionContainer.parentNode.appendChild(newQuestionContainer);
+            const questionsContainer = document.getElementById('questions-container');
+            const questionNumber = questionsContainer.children.length + 1;
+            const questionContainer = document.createElement('div');
+            questionContainer.className = 'question-container';
+            questionContainer.innerHTML = `
+                <div id="question-${questionNumber}">
+                    <h2 class="question-header">Question:</h2>
+                    <textarea class="question-text" id="question-text-${questionNumber}"></textarea>
+                    <div id="answer-container-${questionNumber}">
+                        <!-- Answer choices will be added here -->
+                    </div>
+                    <button type="button" onclick="newAnswer(${questionNumber})">Add Answer Choice</button>
+                    <button type="button" onclick="submitQuestion(${questionNumber})">Submit Question</button>
+                    <button type="button" onclick="resetQuestion(${questionNumber})">Reset Question</button>
+                </div>
+            `;
+            questionsContainer.appendChild(questionContainer);
+            newAnswer(questionNumber); // Add one initial answer choice
         }
-        
-        
-        
-        
-        function newAnswer() {
-            const answerContainer = document.getElementById("answer-container");
-            const answerField = document.createElement('div');
-            answerField.className = 'answer';
-            answerField.innerHTML = `
+
+        function newAnswer(questionNumber) {
+            const answerContainer = document.getElementById(`answer-container-${questionNumber}`);
+            const answerNumber = answerContainer.children.length + 1;
+            const answer = document.createElement('div');
+            answer.className = 'answer';
+            answer.innerHTML = `
                 <label class="answer-select">
-                    <input type="radio" name="answer" class="answer-choice">
+                    <input type="radio" name="answer-${questionNumber}" class="answer-choice-${questionNumber}">
                 </label>
                 <label class="answer-text-label">
-                    <textarea class="answer-text" id="text-answer-${answerContainer.children.length + 1}"></textarea>
+                    <textarea class="answer-text" id="text-answer-${questionNumber}-${answerNumber}"></textarea>
                 </label>
-                <button type="button" class="delete-answer" onclick="this.parentNode.remove()">X</button>`;
-            answerContainer.appendChild(answerField);
+                <button type="button" class="delete-answer" onclick="this.parentNode.remove()">X</button>
+            `;
+            answerContainer.appendChild(answer);
         }
 
-        function saveQuestion() {
-            const questionText = document.getElementById("question-text").value.trim();
-            const answerChoices = document.querySelectorAll('.answer-text');
-            const correctAnswerIndex = Array.from(document.querySelectorAll('.answer-choice')).findIndex(choice => choice.checked);
-
-            if (questionText === '') {
-                alert("Please input something into the question area");
-                return;
-            }
-
-            if (correctAnswerIndex === -1) {
-                alert("Please select the correct answer before saving question");
-                return;
-            }
-
-            const answerTexts = Array.from(answerChoices).map(answer => answer.value.trim());
-
-            const xhr = new XMLHttpRequest();
-            xhr.open("POST", "/save_question", true);
-            xhr.setRequestHeader("Content-Type", "application/json");
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    alert("Question saved successfully");
-                    resetForm();
-                }
-            };
-            xhr.send(JSON.stringify({ question: questionText, answers: answerTexts, correct_answer: correctAnswerIndex }));
+        function resetQuestion(questionNumber) {
+            const questionContainer = document.getElementById(`question-${questionNumber}`);
+            questionContainer.querySelector('.question-text').value = '';
+            questionContainer.querySelectorAll('.answer').forEach(answer => answer.remove());
+            newAnswer(questionNumber); // Add one new answer choice
         }
 
         function resetForm() {
-            document.getElementById("question-text").value = '';
-            document.querySelectorAll('.answer').forEach(answer => answer.remove());
-            newAnswer(); // Add one new answer choice
+            document.getElementById('questions-container').innerHTML = '';
+            newQuestion(); // Start fresh with one new question
+        }
+
+        function saveQuiz() {
+            const quizTitle = document.getElementById('quiz-title').value.trim();
+            const quizDescription = document.getElementById('quiz-description').value.trim();
+            const questions = [];
+
+            document.querySelectorAll('.question-container').forEach(container => {
+                const questionText = container.querySelector('.question-text').value.trim();
+                const answerChoices = Array.from(container.querySelectorAll('.answer-text')).map(area => area.value.trim());
+                const correctAnswer = Array.from(container.querySelectorAll('.answer-choice')).findIndex(choice => choice.checked);
+                questions.push({ questionText, answerChoices, correctAnswer });
+            });
+
+            // For demonstration, we're using console.log instead of actual server interaction
+            console.log(JSON.stringify({ quizTitle, quizDescription, questions }));
+
+            // Assuming you would post this data to your server
+            // Redirect to view quizzes page
+            window.location.href = "/quizzes";
         }
     </script>
 </body>
