@@ -40,8 +40,24 @@
 
     <button type="button" id="new-answer-choice" onclick="newAnswer()">Add Answer Choice</button>
     <button type="button" id="submit-question" onclick="saveQuestion()">Submit Question</button>
-
+    <button type="button" id="add-new-question" onclick="newQuestion()">Add New Question</button>
+    <button type="button" id="reset-form" onclick="resetForm()">Reset Form</button>
     <script>
+
+
+        function newQuestion(){
+            const questionContainer = document.getElementById("question-container");
+            const questionField = document.createElement('div');
+            questionField.className = 'question';
+            questionField.innerHTML = `
+                <label class="question-text-label">
+                    <textarea class="question-text" id="question-text"></textarea>
+                </label>`;
+            questionContainer.appendChild(questionField);
+        }
+        
+        
+        
         function newAnswer() {
             const answerContainer = document.getElementById("answer-container");
             const answerField = document.createElement('div');
