@@ -16,6 +16,10 @@ def index():
     else:
         return redirect(url_for("login"))
 
+# goes to home page 
+@app.route('/')
+def home():
+  return render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -52,6 +56,13 @@ def logout():
 @app.route('/quiz-creator')
 def quiz_creator():
     return render_template('createQuiz.html')
+
+
+@app.route('/quizzes')
+def view_quizzes(): 
+    return render_template('viewQuiz.html')
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

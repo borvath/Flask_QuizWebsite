@@ -7,7 +7,7 @@ try:
     db_config = {
         'host': 'mysql-db',
         'user': 'root',
-        'password': f'{environ['MYSQL_PASS']}',
+        'password': f"{environ['MYSQL_PASS']}",
         'database': 'QuizMaker'
     }
     db = connect(**db_config)
