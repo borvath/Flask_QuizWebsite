@@ -7,8 +7,8 @@ try:
     db_config = {
         'host': 'localhost',
         'user': 'root',
-        'password': f'{environ['MYSQL_PASS']}',
-        'database': 'quizmaker'
+        'password': f"{environ['MYSQL_PASS']}",
+        'database': 'QuizMaker'
     }
     db = connect(**db_config)
 except mysql.connector.Error as err:
