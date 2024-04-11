@@ -20,12 +20,13 @@ New Quizzes
     </div>
 
     <div id="questions-container">
-        <!-- Questions will be added here dynamically -->
+        <!-- View this later-->
     </div>
 
     <button type="button" id="add-new-question" onclick="newQuestion()">Add New Question</button>
     <button type="button" id="reset-form" onclick="resetForm()">Reset All</button>
     <button type="button" id="save-quiz" onclick="saveQuiz()">Save Quiz</button>
+    
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -47,6 +48,8 @@ New Quizzes
                     <button type="button" onclick="newAnswer(${questionNumber})">Add Answer Choice</button>
                     <button type="button" onclick="submitQuestion(${questionNumber})">Submit Question</button>
                     <button type="button" onclick="resetQuestion(${questionNumber})">Reset Question</button>
+                    <button type="button" class="delete-question" onclick="this.parentNode.remove()">Delete Question</button>
+
                 </div>
             `;
             questionsContainer.appendChild(questionContainer);
@@ -82,6 +85,12 @@ New Quizzes
             newQuestion(); // Start fresh with one new question
         }
 
+        function deleteQuestion(button) {
+            var questionContainer = button.parentNode.parentNode;
+            questionContainer.remove(); // Remove the entire question container
+        }
+ 
+
         function saveQuiz() {
             const quizTitle = document.getElementById('quiz-title').value.trim();
             const quizDescription = document.getElementById('quiz-description').value.trim();
@@ -94,11 +103,9 @@ New Quizzes
                 questions.push({ questionText, answerChoices, correctAnswer });
             });
 
-            // For demonstration, we're using console.log instead of actual server interaction
             console.log(JSON.stringify({ quizTitle, quizDescription, questions }));
 
-            // Assuming you would post this data to your server
-            // Redirect to view quizzes page
+            
             window.location.href = "/quizzes";
         }
     </script>
