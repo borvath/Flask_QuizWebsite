@@ -1,0 +1,36 @@
+{% extends "common.html" %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block title %}Home{% endblock %}
+
+{% block header %}
+    {{ super() }}
+{% endblock %}
+
+{% block main %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/table.css') }}" />
+    <p>This is a test.</p>
+    <table>
+        <tr>
+            {% for header in headings %}
+                <th>{{ header }}</th>
+            {% endfor %}
+        </tr>
+
+        {% for user in users %}
+            <tr>
+                {% for key, value in user.items() %}
+                   <td>{{ value }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+
+{% block footer %}
+    <footer>
+        <p>Created by Ben, Brian, Aditi, Anoushka, and Shelley</p>
+    </footer>
+{% endblock %}
