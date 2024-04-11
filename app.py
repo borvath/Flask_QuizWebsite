@@ -53,5 +53,12 @@ def logout():
 def quiz_creator():
     return render_template('createQuiz.html')
 
+
+@app.route('/quizzes')
+def view_quizzes(): 
+    return render_template('viewQuiz.html')
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
