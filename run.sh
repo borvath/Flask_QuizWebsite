@@ -1,5 +1,5 @@
 #!/bin/bash
-# Run "./start.sh help" to see usage (or read below).
+# Run "./run.sh help" to see usage (or read below).
 # Note: sudo is used as otherwise permission will likely be denied (docker requires root by default).
 
 CMD="sudo docker"
@@ -34,7 +34,7 @@ elif [ "$1" == "list" ]; then
     $LIST_I
 
 elif [ "$1" == "help" ] || [ "$#" -gt 1 ]; then
-    echo "Usage: ./start.sh <COMMAND>"
+    echo "Usage: ./run.sh <COMMAND>"
     echo "If no command is given, then 'sudo docker compose up' will be used."
     echo "Commands:"
     echo "  build    This will rebuild the containers before starting them as well prune old images."
