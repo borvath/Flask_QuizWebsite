@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from forms import LoginForm, RegisterForm
 from auth import attempt_register, attempt_login
+from admin import admin_bp
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "some_key"
-
+app.register_blueprint(admin_bp)
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods=['GET', 'POST'])
