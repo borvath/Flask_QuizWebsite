@@ -24,6 +24,22 @@ body {
     margin-right: 5px;
 }
 
+
+.home-button { 
+    display: inline-block;
+    padding: 10px 12px;
+    font-size: 10px;
+    cursor: pointer;
+    text-align: center;
+    outline: none;
+    color: #fff;
+    background-color: cornflowerblue;
+    border:darkred;  
+}
+
+
+
+
 button {
     display: inline-block;
     padding: 10px 12px;
