@@ -45,16 +45,32 @@
     <script>
 
 
-        function newQuestion(){
+        function newQuestion() {
             const questionContainer = document.getElementById("question-container");
-            const questionField = document.createElement('div');
-            questionField.className = 'question';
-            questionField.innerHTML = `
-                <label class="question-text-label">
-                    <textarea class="question-text" id="question-text"></textarea>
-                </label>`;
-            questionContainer.appendChild(questionField);
+            const answerContainer = document.getElementById("answer-container");
+            const newQuestionContainer = questionContainer.cloneNode(true);
+        
+            // Update IDs and names to avoid duplicates
+            const newQuestionId = `question-text-${questionContainer.children.length + 1}`;
+            newQuestionContainer.querySelector(".question-text").id = newQuestionId;
+        
+            const answerChoices = newQuestionContainer.querySelectorAll('.answer-choice');
+            answerChoices.forEach((choice, index) => {
+                const newChoiceName = `answer-${newQuestionId}`;
+                choice.name = newChoiceName;
+            });
+        
+            const answerTexts = newQuestionContainer.querySelectorAll('.answer-text');
+            answerTexts.forEach((text, index) => {
+                const newTextId = `text-answer-${newQuestionId}-${index + 1}`;
+                text.id = newTextId;
+            });
+
+
+        
+            questionContainer.parentNode.appendChild(newQuestionContainer);
         }
+        
         
         
         
