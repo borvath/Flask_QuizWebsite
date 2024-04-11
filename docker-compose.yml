@@ -4,7 +4,7 @@ services:
     container_name: mysql-db
     build: 
       context: .
-      dockerfile: db.Dockerfile
+      dockerfile: ./docker/db.Dockerfile
     ports:
       - "3306:3306"
     environment:
@@ -24,7 +24,7 @@ services:
       - db
     build: 
       context: .
-      dockerfile: app.Dockerfile
+      dockerfile: ./docker/app.Dockerfile
     ports:
       - "5000:5000"
     environment:

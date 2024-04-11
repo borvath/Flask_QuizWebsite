@@ -10,7 +10,10 @@ db.*
 __pycache__
 README.md
 setup.sh
-app.Dockerfile.dockerignore
+pyenv/
+docker/
+*Dockerfile*
+docker-compose.yml
 
 *.txt
 !requirements.txt
