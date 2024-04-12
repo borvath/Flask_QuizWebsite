@@ -52,11 +52,11 @@
                     <button type="button" class="delete-question" onclick="this.parentNode.remove()">Delete Question</button>
 
                 </div>
-            `;
+            `; 
             questionsContainer.appendChild(questionContainer);
             newAnswer(questionNumber); // Add one initial answer choice
         }
-
+        
         function newAnswer(questionNumber) {
             const answerContainer = document.getElementById(`answer-container-${questionNumber}`);
             const answerNumber = answerContainer.children.length + 1;
@@ -88,7 +88,7 @@
 
         function deleteQuestion(button) {
             var questionContainer = button.parentNode.parentNode;
-            questionContainer.remove(); // Remove the entire question container
+            questionContainer.remove();// Remove the entire question container
         }
  
 
