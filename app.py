@@ -16,11 +16,6 @@ def index():
     else:
         return redirect(url_for("login"))
 
-# goes to home page 
-@app.route('/')
-def home():
-  return render_template('index.html')
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if 'user' in session:
