@@ -34,17 +34,18 @@ elif [ "$1" == "list" ]; then
     $LIST_I
 
 elif [ "$1" == "help" ] || [ "$#" -gt 1 ]; then
-    echo "Usage: ./run.sh <COMMAND>"
-    echo "If no command is given, then 'sudo docker compose up' will be used."
-    echo "Commands:"
-    echo "  build    This will rebuild the containers before starting them as well prune old images."
-    echo "           runs: 'sudo docker compose up --build' followed by 'sudo docker image prune.'"
-    echo ""
-    echo "  down     This will stop and remove the containers."
-    echo "           runs: 'sudo docker compose down'."
-    echo ""
-    echo "  list     This will list running containers and created images."
-    echo "           runs: 'sudo docker ps' and 'sudo docker image list'."
-    echo ""
+    printf "\n%s\n" "Usage: ./run.sh <COMMAND>"
+    printf "%s\n\n" "If no command is given, then 'sudo docker compose up' will be used."
+    printf "%10s\n\n" "Commands:"
+    
+    col="  %-10s%s\n"
+    printf "$col" "build" "This will rebuild the containers before starting them as well as prune old images."
+    printf "${col}\n" "" "runs: 'sudo docker compose up --build' followed by 'sudo docker image prune'."
+    
+    printf "$col" "down" "This will stop and remove the containers."
+    printf "${col}\n" "" "runs: 'sudo docker compose down'."
+    
+    printf "$col" "list" "This will list running containers and created images."
+    printf "${col}\n" "" "runs: 'sudo docker ps' and 'sudo docker image list'."
 fi
 
