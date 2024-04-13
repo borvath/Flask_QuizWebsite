@@ -1,19 +1,14 @@
 {% extends "common.html" %}
 
-{% block head %}
-    {{ super() }}
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}" />
-{% endblock %}
 {% block title %}Home{% endblock %}
 
-{% block header %}
-   {{ super() }}
-{% endblock %}
+{% block page_title %}Home{% endblock %}
 
 {% block main %}
-
-{% endblock %}
-
-{% block footer %}
-    {{ super() }}
+	<section class="hero">
+		<div class="hero-content">
+			<h1>Welcome to Quiz</h1>
+			<p>Take a quiz or create your own</p>
+		</div>
+	</section>
 {% endblock %}
