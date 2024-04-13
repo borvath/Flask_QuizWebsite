@@ -3,11 +3,9 @@ table {
     width: 80%;
     border-collapse: collapse;
     border: 4px;
-
 }
 
-th,
-td {
+th, td {
     padding: 4px;
     text-align: left;
 }
