@@ -7,6 +7,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = "some_key"
 app.register_blueprint(admin_bp)
 
+
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -15,6 +16,7 @@ def index():
         return render_template('index.html')
     else:
         return redirect(url_for("login"))
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -56,7 +58,6 @@ def quiz_creator():
 @app.route('/quizzes')
 def view_quizzes(): 
     return render_template('viewQuiz.html')
-
 
 
 if __name__ == '__main__':
