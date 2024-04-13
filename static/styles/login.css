@@ -1,0 +1,61 @@
+/* login.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: cornflowerblue;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 50%;
+    margin: auto;
+    margin-top: 50px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    width: 80%;
+    margin: auto;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid cornflowerblue;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+form input[type="submit"] {
+    background-color: #4caf50;
+    font-size: 1rem;
+    color: white;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background: forestgreen;}
+
+p {
+    text-align: center;
+}
+
+p a {
+    color: crimson;
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
+}

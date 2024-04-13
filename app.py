@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from forms import LoginForm, RegisterForm
 from auth import attempt_register, attempt_login
+from admin import admin_bp
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "some_key"
-
+app.register_blueprint(admin_bp)
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods=['GET', 'POST'])
@@ -14,7 +15,6 @@ def index():
         return render_template('index.html')
     else:
         return redirect(url_for("login"))
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -46,6 +46,17 @@ def logout():
         if key != 'csrf_token':
             del session[key]
     return redirect(url_for("index"))
+
+
+@app.route('/quiz-creator')
+def quiz_creator():
+    return render_template('createQuiz.html')
+
+
+@app.route('/quizzes')
+def view_quizzes(): 
+    return render_template('viewQuiz.html')
+
 
 
 if __name__ == '__main__':

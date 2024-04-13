@@ -1,16 +1,17 @@
 from os import environ
-from mysql.connector import connect, errorcode, Error as MySQL_ERROR
+import mysql.connector
+from mysql.connector import errorcode, connect
 
 
 try:
     db_config = {
         'host': 'localhost',
         'user': 'root',
-        'password': f'{environ["MYSQL_PASS"]}',
-        'database': 'quizmaker'
+        'password': f"{environ['MYSQL_PASS']}",
+        'database': 'QuizMaker'
     }
     db = connect(**db_config)
-except MySQL_ERROR as err:
+except mysql.connector.Error as err:
     if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
         print("Something is wrong with your user name or password")
     elif err.errno == errorcode.ER_BAD_DB_ERROR:
