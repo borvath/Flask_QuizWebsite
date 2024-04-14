@@ -1,5 +1,3 @@
-/* login.css */
-
 body {
     font-family: Arial, sans-serif;
     background-color: cornflowerblue;
@@ -9,21 +7,32 @@ body {
 
 .container {
     width: 50%;
-    margin: auto;
-    margin-top: 50px;
+    margin: 50px auto auto;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+header {
+    margin-bottom: 150px;
+}
+
 h1 {
+    margin-top: 30px;
     text-align: center;
 }
 
 form {
-    width: 80%;
-    margin: auto;
+    width: 40%;
+    margin: auto auto 25px auto;
+}
+
+form select {
+    text-align: center;
+    width: 14%;
+    font-size: 20px;
+    margin-bottom: 5px;
 }
 
 form input[type="text"],
@@ -31,24 +40,33 @@ form input[type="password"],
 form input[type="submit"] {
     width: 100%;
     padding: 10px;
-    margin: 10px 0;
-    border: 1px solid cornflowerblue;
-    border-radius: 5px;
+    margin: 5px 0;
     box-sizing: border-box;
 }
 
+form input[type="text"],
+form input[type="password"] {
+    border: 2px solid steelblue;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
 form input[type="submit"] {
+    border: 2px solid seagreen;
+    border-radius: 5px;
     background-color: #4caf50;
-    font-size: 1rem;
     color: white;
     cursor: pointer;
+    font-size: 32px;
 }
 
 form input[type="submit"]:hover {
-    background: forestgreen;}
+    background: forestgreen;
+}
 
 p {
     text-align: center;
+    font-size: 20px;
 }
 
 p a {

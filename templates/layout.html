@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
     <head>
-        {% block head %}
-            <meta charset="UTF-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" />
-            <link rel="stylesheet" href="{{ url_for('static', filename='styles/common.css') }}" />
-            <title>{% block title %}{% endblock %}</title>
-        {% endblock %}
+        {% block head %}{% endblock %}
     </head>
     <body>
         <header id="common-header">
@@ -17,11 +11,7 @@
             {% block main %}{% endblock %}
         </main>
         <footer id="common-footer">
-            {% block footer %}
-            <div id="created-by-notice">
-                <p>Created by Ben, Brian, Aditi, Anoushka, and Shelley</p>
-            </div>
-            {% endblock %}
+            {% block footer %}{% endblock %}
         </footer>
     </body>
 </html>

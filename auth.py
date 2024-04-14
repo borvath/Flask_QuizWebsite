@@ -1,6 +1,6 @@
 from flask import session
 from flask_bcrypt import Bcrypt
-from database import execute_select_statement, execute_non_select_statement
+from database import execute_select_statement, execute_non_select_statement, change_db_connection
 
 bcrypt = Bcrypt()
 
@@ -15,6 +15,7 @@ def attempt_login(data: dict) -> bool:
     if result is not None:
         if bcrypt.check_password_hash(result['password'], data['password']):
             session.update({"user": data["username"], "first_name": result["first_name"], "user_type": data["type"]})
+            change_connected_user()
             session["login_error"] = None
             return True
         else:
@@ -22,6 +23,16 @@ def attempt_login(data: dict) -> bool:
             return False
     session['login_error'] = "User not found"
     return False
+
+
+def change_connected_user():
+    if "user_type" in session:
+        if session["user_type"] in ['student', 'teacher']:
+            change_db_connection('user', 'user_password')
+        elif session["user_type"] in ['admin']:
+            change_db_connection('admin', 'admin_password')
+    else:
+        change_db_connection('unprivileged', 'unprivileged_password')
 
 
 def attempt_register(data: dict) -> bool:
@@ -36,5 +47,18 @@ def attempt_register(data: dict) -> bool:
         session['register_error'] = None
         return True
     else:
-        session['register_error'] = "Unable to register"  # Need a better way of getting an error message here
+        session['register_error'] = "Unable to register"
         return False
+
+
+def get_current_user_role() -> list[dict]:
+    return execute_select_statement(query="SELECT CURRENT_ROLE();")
+
+
+def check_user_permissions(permission_type: str = None) -> bool:
+    change_connected_user()
+    curr_role = get_current_user_role()[0].values()
+    if permission_type == 'user':
+        return 'app_write' in curr_role or 'app_admin' in curr_role
+    if permission_type == 'admin':
+        return 'app_admin' in curr_role
