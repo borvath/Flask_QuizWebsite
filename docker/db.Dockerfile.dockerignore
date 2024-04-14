@@ -1,5 +1,3 @@
 *
 
-!setup_database.sql
-!db.Dockerfile
-
+!sql_scripts/
