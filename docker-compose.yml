@@ -12,7 +12,7 @@ services:
     volumes:
       - db-data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "--silent"]  # Used to check if db is ready
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "--silent", "--protocol", "tcp"]  # Used to check if db is ready
       start_period: 5s
       interval: 1s
       timeout: 5s
