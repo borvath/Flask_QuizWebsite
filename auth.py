@@ -51,13 +51,16 @@ def attempt_register(data: dict) -> bool:
         return False
 
 
-def get_current_user_role() -> list[dict]:
-    return execute_select_statement(query="SELECT CURRENT_ROLE();")
+def get_current_user_role() -> str:
+    curr_role_dict = execute_select_statement(query="SELECT CURRENT_ROLE();", num_results=1)
+    curr_role = curr_role_dict['CURRENT_ROLE()'].split('@')[0].strip('`')
+    return curr_role
 
 
 def check_user_permissions(permission_type: str = None) -> bool:
     change_connected_user()
-    curr_role = get_current_user_role()[0].values()
+    curr_role = get_current_user_role()
+
     if permission_type == 'user':
         return 'app_write' in curr_role or 'app_admin' in curr_role
     if permission_type == 'admin':

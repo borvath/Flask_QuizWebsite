@@ -50,3 +50,4 @@ def execute_non_select_statement(query, values) -> bool:
 
 
 db = connect_to_database('unprivileged', 'unprivileged_password')
+
