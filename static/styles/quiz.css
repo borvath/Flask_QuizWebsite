@@ -1,53 +1,78 @@
+
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    background-color: lightgrey;
+}
+
+h1.quiz-title {
+    text-align: center; /* Center the Quiz Creator title */
+    margin-top: 20px; /* Add margin to separate from the top */
+}
+
+#quiz-title-container,
+#quiz-description-container,
+#questions-container {
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+#questions-container {
+    padding-bottom: 50px; /* Adjust to accommodate the buttons */
 }
 
 .question-container {
     margin-bottom: 20px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
 }
 
-.question-text {
-    font-size: 18px;
+.question-container h2,
+.definition-container h2 {
+    display: inline-block;
+    width: 48%; /* Adjust width as needed */
+    vertical-align: top;
+}
+
+.question-container h2 {
     margin-bottom: 10px;
+}
+
+.question-text,
+.answer-text {
+    width: calc(100% - 20px);
+    height: 100px; /* Adjust as needed */
+    resize: vertical;
 }
 
 .answer-container {
+    margin-top: 20px;
+}
+
+.answer-container .answer {
     margin-bottom: 10px;
 }
 
-.answer-choice {
-    margin-right: 5px;
+.answer-container .answer-text {
+    width: calc(100% - 40px); /* Adjust as needed */
 }
 
-.home-button { 
+.answer-container label {
     display: inline-block;
-    padding: 10px 12px;
-    font-size: 10px;
-    cursor: pointer;
-    text-align: center;
-    outline: none;
-    color: #fff;
-    background-color: cornflowerblue;
-    border:darkred;  
 }
 
-button {
-    display: inline-block;
-    padding: 10px 12px;
-    font-size: 16px;
-    cursor: pointer;
-    text-align: center;
-    outline: none;
-    color: #fff;
-    background-color: cornflowerblue;
-    border:darkred;  
-    border-radius: 15px;
-    box-shadow: 0 5px #999;
+.answer-container button {
+    margin-left: 10px;
 }
 
-button:hover {
-    background-color: rgb(109, 237, 100);
+.home-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
 }
