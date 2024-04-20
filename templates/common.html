@@ -27,7 +27,7 @@
 			<a href="{{ url_for("admin.view_users") }}">Users</a>
 			<a href="{{ url_for("logout") }}">Logout</a>
 		{% elif session['user_type'] in ['student', 'teacher'] %}
-			<a href="/classes">Your Classes</a>
+			<a href="/class">Your Classes</a>
 			<a href="/rateQuiz">Ratings</a>
 			<div class="dropdown">
 				<a href="#" class="dropbtn">Your Library</a>
