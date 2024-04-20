@@ -1,0 +1,20 @@
+# Git
+.git
+.gitignore
+
+# Database
+*.sql
+db.*
+
+# Other
+__pycache__
+README.md
+setup.sh
+pyenv/
+docker/
+*Dockerfile*
+docker-compose.yml
+
+*.txt
+!requirements.txt
+

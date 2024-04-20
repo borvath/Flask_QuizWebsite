@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/pages.css') }}" />
+        <title>View Quizzes</title>
+        <script>
+            window.onload = function() {
+                fetch('/api/quizzes') 
+                    .then(response => response.json())
+                    .then(quizzes => {
+                        const quizList = document.getElementById('quiz-list');
+                        quizzes.forEach(quiz => {
+                            const quizElement = document.createElement('div');
+                            quizElement.textContent = quiz.name; 
+                            quizList.appendChild(quizElement);
+                        });
+                    });
+            };
+        </script>
+    </head>
+    <a href="/" class="home-button" >Home</a>
+    
+    <body>
+        <h1>View Quizzes</h1>
+        <div id="quiz-list"></div>
+    </body>
+    </html>

@@ -1,27 +1,50 @@
 {% extends "layout.html" %}
 
+{% block head %}
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/common.css') }}" />
+	<title>{% block title %}{% endblock %}</title>
+{% endblock %}
+
 {% block header %}
-    <nav>
-        <a href="/"><img src="{{ url_for('static', filename='images/light.ico') }}" alt="logo" /></a>
-        <div class = "logo">QUIZ</div>
-        {% if session['user_type'] == 'admin' %}
-            <a href="/">Home</a>
-            <a href="/class">View Classes</a>
-            <a href="/quizzes">View Quizzes</a>
-            <a href="{{ url_for("admin.view_users") }}">View Users</a>
-        {% endif %}
-        {% if session['user_type'] in ['student', 'teacher'] %}
-            <a href="/">Home</a>
-            <a href="/classes">Your Classes</a>
-            <a href="/quizzes">View Quizzes</a>
-            <a href="/quiz-creator">Create New Quiz</a>
-        {% endif %}
-        <a href="{{ url_for("logout") }}">Logout</a>
-    </nav>
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Welcome to Quiz</h1>
-            <p>Take a quiz or create your own</p>
-        </div>
-    </section>
+<nav>
+	<div class="logo">
+		<img src="{{ url_for('static', filename='images/light.ico') }}" alt="logo" />
+		<h1>{% block page_title %}{% endblock %}</h1>
+	</div>
+	<menu>
+		{% if "user" not in session %}
+			<a href="/">Home</a>
+			<a href="/quizzes">View Quizzes</a>
+			<a href="{{ url_for("login") }}">Login</a>
+		{% elif session['user_type'] == 'admin' %}
+			<a href="/class">Classes</a>
+			<a href="/quizzes">Quizzes</a>
+			<a href="/quizzes">view a Quiz</a>
+			<a href="/quiz">Take a Quiz</a>
+			<a href="{{ url_for("admin.view_users") }}">Users</a>
+			<a href="{{ url_for("logout") }}">Logout</a>
+		{% elif session['user_type'] in ['student', 'teacher'] %}
+			<a href="/classes">Your Classes</a>
+			<a href="/rateQuiz">Ratings</a>
+			<div class="dropdown">
+				<a href="#" class="dropbtn">Your Library</a>
+				<div class="dropdown-content">
+					<a href="/quizzes">Study Set</a>
+					<a href="/quiz">Take a Quiz</a>
+				</div>
+			</div>
+			<a href="/quiz-creator">Create New Quiz</a>
+			<a href="{{ url_for("logout") }}">Logout</a>
+		{% endif %}
+	</menu>
+</nav>
+{% endblock %}
+
+{% block footer %}
+	<div id="created-by-notice">
+		<p>Created by Ben, Brian, Aditi, Anoushka, and Shelley</p>
+	</div>
 {% endblock %}

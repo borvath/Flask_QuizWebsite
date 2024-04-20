@@ -1,0 +1,38 @@
+
+services:
+  db:
+    container_name: mysql-db
+    build: 
+      context: .
+      dockerfile: ./docker/db.Dockerfile
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "--silent", "--protocol", "tcp"]  # Used to check if db is ready
+      start_period: 5s
+      interval: 1s
+      timeout: 5s
+      retries: 30
+
+  app:
+    container_name: flask-app
+    links:
+      - db
+    build: 
+      context: .
+      dockerfile: ./docker/app.Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      MYSQL_PASS: root
+    depends_on:
+      db:
+        condition: service_healthy  # Wait for db to be ready before starting
+
+volumes:
+  db-data:
+
