@@ -4,8 +4,8 @@ body {
 }
 
 h1.quiz-title {
-    text-align: center; /* Center the Quiz Creator title */
-    margin-top: 20px; /* Add margin to separate from the top */
+    text-align: center; 
+    margin-top: 20px; 
 }
 
 #quiz-title-container,
@@ -21,7 +21,7 @@ h1.quiz-title {
 }
 
 #questions-container {
-    padding-bottom: 50px; /* Adjust to accommodate the buttons */
+    padding-bottom: 50px; 
 }
 
 .question-container {
@@ -31,7 +31,7 @@ h1.quiz-title {
 .question-container h2,
 .definition-container h2 {
     display: inline-block;
-    width: 48%; /* Adjust width as needed */
+    width: 48%; 
     vertical-align: top;
 }
 
@@ -42,7 +42,7 @@ h1.quiz-title {
 .question-text,
 .answer-text {
     width: calc(100% - 20px);
-    height: 100px; /* Adjust as needed */
+    height: 100px; 
     resize: vertical;
 }
 
@@ -55,7 +55,7 @@ h1.quiz-title {
 }
 
 .answer-container .answer-text {
-    width: calc(100% - 40px); /* Adjust as needed */
+    width: calc(100% - 40px); 
 }
 
 .answer-container label {

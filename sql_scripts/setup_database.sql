@@ -46,3 +46,12 @@ CREATE TABLE IF NOT EXISTS answer (
     PRIMARY KEY (id),
     CONSTRAINT question_id FOREIGN KEY (question_id) REFERENCES question(id)
 );
+
+CREATE TABLE IF NOT EXISTS ratings (
+    studentID INT UNSIGNED PRIMARY KEY,
+    quizId INT UNSIGNED NOT NULL,
+    studentRatings VARCHAR(250),
+   amountOfStars INT UNSIGNED CHECK (amountOfStars >= 1 AND amountOfStars <= 5),
+    CONSTRAINT quizId FOREIGN KEY (quizId) REFERENCES quiz(id)
+    CONSTRAINT studentID FOREIGN KEY (studentID) REFERENCES user(id)
+);

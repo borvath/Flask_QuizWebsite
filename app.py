@@ -58,9 +58,14 @@ def quiz_creator():
 def view_quizzes(): 
     return render_template('viewQuiz.html')
 
-@app.route('/classes')
-def view_classes(): 
-    return render_template('classes.html')
+@app.route('/rateQuiz')
+def viewRatings():
+    return render_template('ratings.html')
+
+
+@app.route('/quiz')
+def take_quiz():
+    return render_template('takeQuiz.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
