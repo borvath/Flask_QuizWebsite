@@ -67,5 +67,9 @@ def viewRatings():
 def take_quiz():
     return render_template('takeQuiz.html')
 
+@app.route('/class')
+def showClasses():
+    return render_template('classes.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
