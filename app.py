@@ -55,8 +55,9 @@ def quiz_creator():
 
 
 @app.route('/quizzes')
-def view_quizzes(): 
-    return render_template('viewQuiz.html')
+def view_quizzes(quiz_name): 
+    quiz = view_quizzes(quiz_name)
+    return render_template('viewQuiz.html', quiz=quiz)
 
 @app.route('/rateQuiz')
 def viewRatings():

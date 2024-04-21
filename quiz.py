@@ -30,7 +30,19 @@ def create_answer(question_id, answer_data):
     insert_values = (question_id, answer_data['answer_text'], answer_data['is_correct'])
     execute_non_select_statement(insert_query, insert_values)
 
-
 def view_quiz(quiz_name):
     select_query = "SELECT * FROM quiz WHERE name = %s"
-    return execute_select_statement(select_query, (quiz_name,), num_results=1)
+    quiz = execute_select_statement(select_query, (quiz_name,), num_results=1)
+    quiz['questions'] = view_questions(quiz['id'])
+    return quiz
+
+def view_questions(quiz_id):
+    select_query = "SELECT * FROM question WHERE quiz_id = %s"
+    questions = execute_select_statement(select_query, (quiz_id,))
+    for question in questions:
+        question['answers'] = view_answers(question['id'])
+    return questions
+
+def view_answers(question_id):
+    select_query = "SELECT * FROM answer WHERE question_id = %s"
+    return execute_select_statement(select_query, (question_id,))

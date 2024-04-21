@@ -122,8 +122,20 @@
                 questions: questions
             };
 
-            console.log(JSON.stringify(quizData));
-            // Here you can send the quiz data to the server for saving
+            fetch('/create_quiz', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(quizData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
         }
 
         // Function to populate the class dropdown
