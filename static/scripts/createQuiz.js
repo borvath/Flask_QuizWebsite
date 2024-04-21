@@ -1,3 +1,6 @@
+document.addEventListener('DOMContentLoaded', function() {
+    newQuestion(); // Initialize with one question
+});
 
 
 document.addEventListener('DOMContentLoaded', function() {
