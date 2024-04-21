@@ -5,7 +5,6 @@ from auth import check_user_permissions
 admin_bp = Blueprint('admin', __name__)
 
 
-# TODO: Authentication
 @admin_bp.route("/viewusers", methods=['GET', 'POST'])
 def view_users():
     """Renders page where admins can view users that exist in the database."""

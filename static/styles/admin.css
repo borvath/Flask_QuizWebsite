@@ -1,0 +1,10 @@
+@import "common.css";
+
+.bottom_nav {
+    height: 40px;
+    background: #094987;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    margin-bottom: 1em;
+}

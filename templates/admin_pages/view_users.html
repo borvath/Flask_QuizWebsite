@@ -1,18 +1,17 @@
-{% extends "common.html" %}
+{% extends "admin_pages/admin.html" %}
 
 {% block head %}
     {{ super() }}
 	<link rel="stylesheet" href="{{ url_for('static', filename='styles/table.css') }}" />
 {% endblock %}
 
-{% block title %}Home{% endblock %}
+{% block title %}View Users{% endblock %}
 
 {% block header %}
     {{ super() }}
 {% endblock %}
 
 {% block main %}
-    <p>This is a test.</p>
     <table>
         <tr>
             {% for header in headings %}
