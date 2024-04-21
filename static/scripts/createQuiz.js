@@ -1,5 +1,19 @@
+
+
 document.addEventListener('DOMContentLoaded', function() {
-    newQuestion(); // Initialize with one question
+    // Initialize with one question for each class
+    ['COP 3363 Introduction to C++',
+    'COP 3330 Data Structures, Algorithms, and Generic Programming I',
+    'CDA 3100 Computer Organization I',
+    'CEN 4020 Software Engineering I',
+    'CEN 4090L Software Engineering Capstone',
+    'CIS 3250 Ethics in Computer Science',
+    'COP 4610 Operating Systems & Concurrent Programming',
+    'COP 4530 Data Structures, Algorithms, and Generic Programming II',
+    'COP 4521 Secure Parallel & Distributed Programming w/ Python',
+    'COT 4420 Theory of Computation'].forEach(className => {
+        newQuestion(className);
+    });
 });
 
 function newQuestion() {
