@@ -14,3 +14,15 @@ def view_users():
         headings = ["ID", "Username", "Last Name", "First Name", "Type"]
         return render_template('admin_pages/view_users.html', users=result, headings=headings)
     abort(403)
+
+
+@admin_bp.route("/viewlogs", methods=['GET', 'POST'])
+def view_logs():
+    """Renders page where admins can view security logs such as login events."""
+    if check_user_permissions("admin"):
+        query = ("SELECT loginLog.id, user_id, username, timestamp as logs "
+                 "FROM loginLog INNER JOIN user ON loginLog.user_id=user.id ORDER BY timestamp DESC;")
+        result = execute_select_statement(query, None)
+        headings = ["ID", "UserID", "Username", "Timestamp"]
+        return render_template('admin_pages/view_logins.html', logs=result, headings=headings)
+    abort(403)

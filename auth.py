@@ -1,6 +1,7 @@
 from flask import session
 from flask_bcrypt import Bcrypt
 from database import execute_select_statement, execute_non_select_statement, change_db_connection
+from logutil import log_login
 
 bcrypt = Bcrypt()
 
@@ -17,6 +18,7 @@ def attempt_login(data: dict) -> bool:
             session.update({"user": data["username"], "first_name": result["first_name"], "user_type": data["type"]})
             change_connected_user()
             session["login_error"] = None
+            log_login(data['username'])
             return True
         else:
             session['login_error'] = "Password not valid"
