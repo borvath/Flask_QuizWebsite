@@ -3,11 +3,12 @@
     margin: 0;
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
+    color: #000;
 }
 
 nav {
     height: 80px;
-    background: cornflowerblue;
+    background: lightgrey;
     display: flex;
     justify-content: right;
     align-items: center;
@@ -34,7 +35,7 @@ nav {
 }
 
 nav a {
-    color: white;
+    color: black;
     font-size: 20px;
     text-decoration: none;
     padding: 0 1.5rem;
@@ -48,7 +49,7 @@ nav a {
 
 .dropbtn {
     background: none;
-    color: white;
+    color: black;
     border: none;
     padding: 0 1.5rem;
     font-size: 20px;
@@ -86,6 +87,8 @@ nav a {
 
 .dropdown:hover .dropbtn {
     background-color: #3e8e41;
+    border-radius: 100%; 
+
 }
 
 body {

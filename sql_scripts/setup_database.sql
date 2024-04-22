@@ -48,10 +48,19 @@ CREATE TABLE IF NOT EXISTS answer (
 );
 
 CREATE TABLE IF NOT EXISTS ratings (
-    studentID INT UNSIGNED PRIMARY KEY,
-    quizId INT UNSIGNED NOT NULL,
+    studentID INT UNSIGNED NOT NULL,
+    quizID INT UNSIGNED NOT NULL,
     studentRatings VARCHAR(250),
    amountOfStars INT UNSIGNED CHECK (amountOfStars >= 1 AND amountOfStars <= 5),
-    CONSTRAINT quizId FOREIGN KEY (quizId) REFERENCES quiz(id)
+    PRIMARY KEY (studentID, quizID),
+    CONSTRAINT quizID FOREIGN KEY (quizID) REFERENCES quiz(id),
     CONSTRAINT studentID FOREIGN KEY (studentID) REFERENCES user(id)
+);
+
+CREATE TABLE IF NOT EXISTS loginLog (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    user_id INT UNSIGNED NOT NULL,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT user_id FOREIGN KEY (user_id) REFERENCES user(id)
 );

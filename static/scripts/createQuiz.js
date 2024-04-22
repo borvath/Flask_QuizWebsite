@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     newQuestion(); // Initialize with one question
 });
 
+
+
 function newQuestion() {
     const questionsContainer = document.getElementById('questions-container');
     const questionNumber = questionsContainer.children.length + 1;

@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/pages.css') }}" />
+
     <title>View Classes</title>
 </head>
-<a href="/" class="home-button" >Home</a>
-
 <body>
+    <a href="/" class="home-button">Home</a>
     <h1>View Classes</h1>
-    <div id="quiz-list"></div>
+    <div id="classes-list">
+        <ul>
+            {% for class in classes %}
+            <li><a href="{{ url_for('class_details', class_name=class.link) }}">{{ class.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>
