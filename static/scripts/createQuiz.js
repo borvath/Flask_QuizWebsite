@@ -36,12 +36,19 @@ function newAnswer(questionNumber) {
     answerContainer.appendChild(answer);
 }
 
-function getNewAnswerHtml(questionNumber, answerNumber) {
+function getNewAnswerHtml(qNum, aNum) {
+    let radio_str = ""
+    if (aNum > 1) {
+        radio_str = `<input type="radio" name="question-${qNum}-choice" id="q-${qNum}-a-${aNum}" class="answer-choice-${qNum}>`;
+    }
+    else {
+        radio_str = `<input type="radio" name="question-${qNum}-choice" id="q-${qNum}-a-${aNum}" class="answer-choice-${qNum}" checked required>`
+    }
     return `<label class="answer-select">
-                <input type="radio" name="question-${questionNumber}-answer-1-is-correct" class="answer-choice-${questionNumber}">
+                ${radio_str}
             </label>
             <label class="answer-text-label">
-                <textarea class="answer-text" name="question-${questionNumber}-answer-${answerNumber}"></textarea>
+                <textarea class="answer-text" name="question-${qNum}-answer-${aNum}"></textarea>
             </label>
             <button type="button" class="delete-answer" onclick="this.parentNode.remove()">X</button>`;
 }
