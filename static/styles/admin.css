@@ -8,3 +8,7 @@
     align-items: center;
     margin-bottom: 1em;
 }
+
+.bottom_nav a {
+    color: white;
+}

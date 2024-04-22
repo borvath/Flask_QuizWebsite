@@ -13,18 +13,21 @@
 
 {% block main %}
     <table>
-        <tr>
-            {% for header in headings %}
-                <th>{{ header }}</th>
-            {% endfor %}
-        </tr>
-
-        {% for log in logs %}
+        <thead>
             <tr>
-                {% for key, value in log.items() %}
-                   <td>{{ value }}</td>
+                {% for header in headings %}
+                    <th>{{ header }}</th>
                 {% endfor %}
             </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for log in logs %}
+                <tr>
+                    {% for key, value in log.items() %}
+                       <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
 {% endblock %}
