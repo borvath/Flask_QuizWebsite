@@ -39,10 +39,10 @@ function newAnswer(questionNumber) {
 function getNewAnswerHtml(qNum, aNum) {
     let radio_str = ""
     if (aNum > 1) {
-        radio_str = `<input type="radio" name="question-${qNum}-choice" id="q-${qNum}-a-${aNum}" class="answer-choice-${qNum}>`;
+        radio_str = `<input type="radio" name="question-${qNum}-choice" id="q-${qNum}-a-${aNum}" value="${aNum}" class="answer-choice-${qNum}>`;
     }
     else {
-        radio_str = `<input type="radio" name="question-${qNum}-choice" id="q-${qNum}-a-${aNum}" class="answer-choice-${qNum}" checked required>`
+        radio_str = `<input type="radio" name="question-${qNum}-choice" id="q-${qNum}-a-${aNum}" value="${aNum}" class="answer-choice-${qNum}" checked required>`
     }
     return `<label class="answer-select">
                 ${radio_str}

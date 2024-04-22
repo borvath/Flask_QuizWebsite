@@ -14,8 +14,8 @@ def create_quiz(quiz_data):
         question = {"question_text": quiz_data[f"question-{i}-text"]}
         j = 1
         while f"question-{i}-answer-{j}" in quiz_data:
-            is_correct_key = f"question-{i}-answer-{j}-is-correct"
-            is_correct = quiz_data[is_correct_key] if is_correct_key in quiz_data else False
+            is_correct_key = f"question-{i}-choice"
+            is_correct = quiz_data[is_correct_key] if is_correct_key in quiz_data else str(-1)
             if "answers" in question:
                 question['answers'].append([quiz_data[f"question-{i}-answer-{j}"], is_correct])
             else:
@@ -30,8 +30,8 @@ def create_question(quiz_id, question_data):
     insert_query = "INSERT INTO question (quiz_id, question_text) VALUES (%s, %s);"
     insert_values = (quiz_id, question_data['question_text'])
     question_id = execute_non_select_statement(insert_query, insert_values)
-    for answer in question_data['answers']:
-        answer_data = {"answer_text": answer[0], "is_correct": 1 if answer[1] == "on" else 0}
+    for idx, answer in enumerate(question_data['answers']):
+        answer_data = {"answer_text": answer[0], "is_correct": 1 if answer[1] == str(idx + 1) else 0}
         create_answer(question_id, answer_data)
 
 
