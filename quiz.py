@@ -16,11 +16,11 @@ def create_quiz(quiz_data):
         while f"question-{i}-answer-{j}" in quiz_data:
             is_correct_key = f"question-{i}-answer-{j}-is-correct"
             is_correct = quiz_data[is_correct_key] if is_correct_key in quiz_data else False
-        if "answers" in question:
-            question['answers'].append([quiz_data[f"question-{i}-answer-{j}"], is_correct])
-        else:
-            question['answers'] = [[quiz_data[f"question-{i}-answer-{j}"], is_correct]]
-        j += 1
+            if "answers" in question:
+                question['answers'].append([quiz_data[f"question-{i}-answer-{j}"], is_correct])
+            else:
+                question['answers'] = [[quiz_data[f"question-{i}-answer-{j}"], is_correct]]
+            j += 1
         create_question(quiz_id, question)
         i += 1
     return True
