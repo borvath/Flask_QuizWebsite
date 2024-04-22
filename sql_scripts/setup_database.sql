@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS quiz (
 CREATE TABLE IF NOT EXISTS question (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     quiz_id INT UNSIGNED NOT NULL,
-    content VARCHAR(500) NOT NULL,
+    question_text VARCHAR(500) NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT quiz_id FOREIGN KEY (quiz_id) REFERENCES quiz(id)
 );
@@ -41,8 +41,8 @@ CREATE TABLE IF NOT EXISTS question (
 CREATE TABLE IF NOT EXISTS answer (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     question_id INT UNSIGNED NOT NULL,
-    content VARCHAR(500) NOT NULL,
-    correct BOOLEAN NOT NULL,
+    answer_text VARCHAR(500) NOT NULL,
+    is_correct BOOLEAN NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT question_id FOREIGN KEY (question_id) REFERENCES question(id)
 );
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS ratings (
     studentID INT UNSIGNED NOT NULL,
     quizID INT UNSIGNED NOT NULL,
     studentRatings VARCHAR(250),
-   amountOfStars INT UNSIGNED CHECK (amountOfStars >= 1 AND amountOfStars <= 5),
+    amountOfStars INT UNSIGNED CHECK (amountOfStars >= 1 AND amountOfStars <= 5),
     PRIMARY KEY (studentID, quizID),
     CONSTRAINT quizID FOREIGN KEY (quizID) REFERENCES quiz(id),
     CONSTRAINT studentID FOREIGN KEY (studentID) REFERENCES user(id)

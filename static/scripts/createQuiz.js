@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
+    populateClassDropdown(); // Call the function to populate the class dropdown
     newQuestion(); // Initialize with one question
 });
-
-
 
 function newQuestion() {
     const questionsContainer = document.getElementById('questions-container');
@@ -17,12 +16,12 @@ function newQuestion() {
 function getNewQuestionHtml(questionNumber) {
     return `<div id="question-${questionNumber}">
                 <h2 class="question-header">Question:</h2>
-                <textarea class="question-text" id="question-text-${questionNumber}"></textarea>
+                <textarea class="question-text" name="question-${questionNumber}-text"></textarea>
                 <div id="answer-container-${questionNumber}">
                     <!-- Answer choices will be added here -->
                 </div>
                 <button type="button" onclick="newAnswer(${questionNumber})">Add Answer Choice</button>
-                <button type="button" onclick="submitQuestion(${questionNumber})">Submit Question</button>
+                <button type="button" onclick="newQuestion(${questionNumber})">Submit Question</button>
                 <button type="button" onclick="resetQuestion(${questionNumber})">Reset Question</button>
                 <button type="button" class="delete-question" onclick="deleteQuestion(this)">Delete Question</button>
             </div>`;
@@ -39,10 +38,10 @@ function newAnswer(questionNumber) {
 
 function getNewAnswerHtml(questionNumber, answerNumber) {
     return `<label class="answer-select">
-                <input type="radio" name="answer-${questionNumber}" class="answer-choice-${questionNumber}">
+                <input type="radio" name="question-${questionNumber}-answer-1-is-correct" class="answer-choice-${questionNumber}">
             </label>
             <label class="answer-text-label">
-                <textarea class="answer-text" id="text-answer-${questionNumber}-${answerNumber}"></textarea>
+                <textarea class="answer-text" name="question-${questionNumber}-answer-${answerNumber}"></textarea>
             </label>
             <button type="button" class="delete-answer" onclick="this.parentNode.remove()">X</button>`;
 }
@@ -75,7 +74,27 @@ function saveQuiz() {
         const correctAnswer = Array.from(container.querySelectorAll('.answer-choice')).findIndex(choice => choice.checked);
         questions.push({ questionText, answerChoices, correctAnswer });
     });
-
     console.log(JSON.stringify({ quizTitle, quizDescription, questions }));
-    window.location.href = "/quizzes";
+}
+
+function populateClassDropdown() {
+    const classDropdown = document.getElementById('class-dropdown');
+    const classes = [
+        {"name": "COP 3363 Introduction to C++", "link": "/cop3363"},
+        {"name": "COP 3330 Data Structures, Algorithms, and Generic Programming I", "link": "/cop3330"},
+        {"name": "CDA 3100 Computer Organization I", "link": "/cda3100"},
+        {"name": "CEN 4020 Software Engineering I", "link": "/cen4020"},
+        {"name": "CEN 4090L Software Engineering Capstone", "link": "/cen4090l"},
+        {"name": "CIS 3250 Ethics in Computer Science", "link": "/cis3250"},
+        {"name": "COP 4610 Operating Systems & Concurrent Programming", "link": "/cop4610"},
+        {"name": "COP 4530 Data Structures, Algorithms, and Generic Programming II", "link": "/cop4530"},
+        {"name": "COP 4521 Secure Parallel & Distributed Programming w/ Python", "link": "/cop4521"},
+        {"name": "COT 4420 Theory of Computation", "link": "/cot4420"}
+    ];
+    classes.forEach(classObj => {
+        const option = document.createElement('option');
+        option.value = classObj.link;
+        option.textContent = classObj.name;
+        classDropdown.appendChild(option);
+    });
 }

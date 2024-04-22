@@ -38,7 +38,7 @@ def execute_select_statement(query: str, values: tuple = None, num_results: int 
     return results
 
 
-def execute_non_select_statement(query, values) -> bool:
+def execute_non_select_statement(query, values) -> int:
     with db.cursor(dictionary=True) as cursor:
         cursor.execute(query, values)
         if cursor.fetchwarnings() is not None:
@@ -46,7 +46,10 @@ def execute_non_select_statement(query, values) -> bool:
             db.rollback()
             return False
         db.commit()
-    return True
+        if cursor.lastrowid is not None:
+            return cursor.lastrowid
+        else:
+            return True
 
 
 db = connect_to_database('unprivileged', 'unprivileged_password')
