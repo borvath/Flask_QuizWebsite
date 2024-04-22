@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, session, a
 from forms import LoginForm, RegisterForm
 from auth import attempt_register, attempt_login, check_user_permissions
 from admin import admin_bp
+from database import execute_select_statement, execute_non_select_statement, change_db_connection
+from quiz import view_questions
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "some_key"
@@ -54,10 +56,22 @@ def quiz_creator():
     abort(403)
 
 
-@app.route('/quizzes')
-def view_quiz(quiz_name): 
-    quiz = view_quiz(quiz_name)
-    return render_template('viewQuiz.html', quiz=quiz)
+@app.route('/quizzes', methods=['GET'])
+@app.route('/quizzes/<quiz_id>', methods=['GET'])
+def view_quizzes(quiz_id=None): 
+    if quiz_id is None:
+        # Fetch all quizzes
+        select_query = "SELECT * FROM quiz"
+        quizzes = execute_select_statement(select_query)
+        for quiz in quizzes:
+            quiz['questions'] = view_questions(quiz['id'])
+        return render_template('viewQuiz.html', quizzes=quizzes)
+    else:
+        # Fetch the quiz with the provided quiz_id
+        select_query = "SELECT * FROM quiz WHERE id = %s"
+        quiz = execute_select_statement(select_query, (quiz_id,), num_results=1)
+        quiz['questions'] = view_questions(quiz['id'])
+        return render_template('viewQuiz.html', quiz=quiz)
 
 @app.route('/rateQuiz')
 def viewRatings():
