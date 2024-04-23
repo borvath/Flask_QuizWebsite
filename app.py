@@ -113,7 +113,7 @@ def class_details(class_name):
         quizzes = get_quizzes_by_course(class_name)
         if quizzes:
             return render_template('class_details.html', class_name=class_name, quizzes=quizzes)
-    return render_template('class_details.html')
+    return render_template('class_details.html', class_name=class_name)
 
     
 if __name__ == '__main__':
