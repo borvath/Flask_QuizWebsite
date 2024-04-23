@@ -3,12 +3,12 @@ from database import execute_select_statement, execute_non_select_statement
 
 def create_quiz(quiz_data):
     print(quiz_data)
-    insert_query = "INSERT INTO quiz (author_id, name, course) VALUES (%s, %s, %s);"
+    insert_query = "INSERT INTO quiz (author_id, name, description, course) VALUES (%s, %s, %s, %s);"
     
     course = quiz_data.get('course', None)
     if course:
         course = course.replace('/', '').strip() 
-    insert_values = (session['user_id'], quiz_data['quiz-title'], course)
+    insert_values = (session['user_id'], quiz_data['quiz-title'], quiz_data['quiz-description'], course)
     quiz_id = execute_non_select_statement(insert_query, insert_values)
     if quiz_id is None:
         return False
