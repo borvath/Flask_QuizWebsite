@@ -116,5 +116,6 @@ def class_details(class_name):
     else:
         return "Class not found", 404
 
+
 if __name__ == '__main__':
     app.run(debug=True)
