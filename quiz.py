@@ -75,3 +75,6 @@ def get_answers(question_id):
 
 def get_quiz_names():
     return execute_select_statement("SELECT name FROM quiz;")
+
+def get_courses():
+    return execute_select_statement("SELECT DISTINCT course FROM quiz;")

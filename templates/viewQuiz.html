@@ -14,6 +14,7 @@
 {% block main %}
     <table>
         <tr>
+            <th>Course</th>
             <th>Quiz Name</th>
             <th>Question</th>
             <th>Correct Answer</th>
@@ -24,6 +25,7 @@
                 {% for answer in question.answers %}
                     {% if answer.is_correct %}
                         <tr>
+                            <td>{{ quiz.course }}</td>
                             <td>{{ quiz.name }}</td>
                             <td>{{ question.question_text }}</td>
                             <td>{{ answer.answer_text }}</td>
