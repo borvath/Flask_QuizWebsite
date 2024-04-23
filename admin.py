@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, abort
-from database import execute_select_statement
+from flask import Blueprint, render_template, abort, request, redirect
+from database import execute_select_statement, execute_non_select_statement
 from auth import check_user_permissions
 
 admin_bp = Blueprint('admin', __name__)
@@ -8,11 +8,18 @@ admin_bp = Blueprint('admin', __name__)
 @admin_bp.route("/admin/viewusers", methods=['GET', 'POST'])
 def view_users():
     """Renders page where admins can view users that exist in the database."""
-    if check_user_permissions("admin"):
-        query = "SELECT id, username, last_name, first_name, type FROM user;"
-        result = execute_select_statement(query, None)
-        headings = ["ID", "Username", "Last Name", "First Name", "Type"]
-        return render_template('admin_pages/view_users.html', users=result, headings=headings)
+    if request.method == "GET":
+        if check_user_permissions("admin"):
+            query = "SELECT id, username, last_name, first_name, type FROM user;"
+            result = execute_select_statement(query, None)
+            headings = ["ID", "Username", "Last Name", "First Name", "Type"]
+            return render_template('admin_pages/view_users.html', users=result, headings=headings)
+    if request.method == "POST":
+        if check_user_permissions("admin"):
+            query = "DELETE FROM user WHERE id = %s"
+            values = (request.form.get('user-delete'),)
+            execute_non_select_statement(query, values)
+            return redirect(request.url)
     abort(403)
 
 

@@ -18,6 +18,7 @@
                 {% for header in headings %}
                     <th>{{ header }}</th>
                 {% endfor %}
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,11 @@
                     {% for key, value in user.items() %}
                        <td>{{ value }}</td>
                     {% endfor %}
+                    <td>
+                        <form method="post">
+                            <button type="submit" name="user-delete" value="{{ user.id }}">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
