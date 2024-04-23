@@ -4,8 +4,10 @@ from database import execute_select_statement, execute_non_select_statement
 
 def create_quiz(quiz_data):
     print(quiz_data)
-    insert_query = "INSERT INTO quiz (author_id, name) VALUES (%s, %s);"
-    insert_values = (session['user_id'], quiz_data['quiz-title'])
+    insert_query = "INSERT INTO quiz (author_id, name, course_id) VALUES (%s, %s, %s);"
+    # Extract course ID from form data
+    course_id = quiz_data.get('course_id', None)
+    insert_values = (session['user_id'], quiz_data['quiz-title'], course_id)
     quiz_id = execute_non_select_statement(insert_query, insert_values)
     if quiz_id is None:
         return False
@@ -24,6 +26,8 @@ def create_quiz(quiz_data):
         create_question(quiz_id, question)
         i += 1
     return True
+
+
 
 
 def create_question(quiz_id, question_data):
