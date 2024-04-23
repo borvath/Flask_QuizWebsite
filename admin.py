@@ -5,7 +5,7 @@ from auth import check_user_permissions
 admin_bp = Blueprint('admin', __name__)
 
 
-@admin_bp.route("/viewusers", methods=['GET', 'POST'])
+@admin_bp.route("/admin/viewusers", methods=['GET', 'POST'])
 def view_users():
     """Renders page where admins can view users that exist in the database."""
     if check_user_permissions("admin"):
@@ -16,7 +16,7 @@ def view_users():
     abort(403)
 
 
-@admin_bp.route("/viewlogs", methods=['GET', 'POST'])
+@admin_bp.route("/admin/viewlogs", methods=['GET', 'POST'])
 def view_logs():
     """Renders page where admins can view security logs such as login events."""
     if check_user_permissions("admin"):

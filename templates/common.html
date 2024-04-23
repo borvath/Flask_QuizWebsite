@@ -22,9 +22,8 @@
 		{% elif session['user_type'] == 'admin' %}
 			<a href="/class">Classes</a>
 			<a href="/quizzes">Quizzes</a>
-			<a href="/quizzes">View a Quiz</a>
 			<a href="/quiz">Take a Quiz</a>
-			<a href="{{ url_for("admin.view_users") }}">Users</a>
+			<a href="{{ url_for("admin.view_users") }}">Manage</a>
 			<a href="{{ url_for("logout") }}">Logout</a>
 		{% elif session['user_type'] in ['student', 'teacher'] %}
 			<a href="/class">Your Classes</a>
