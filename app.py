@@ -10,13 +10,13 @@ app.register_blueprint(admin_bp)
 
 classes = [
     {"name": "COP 3363 Introduction to C++", "link": "cop3363"},
-    {"name": "COP 3330 Data Structures, Algorithms, and Generic Programming I", "link": "cop3330"},
+    {"name": "COP 3330 Data Structures Programming I", "link": "cop3330"},
     {"name": "CDA 3100 Computer Organization I", "link": "cda3100"},
     {"name": "CEN 4020 Software Engineering I", "link": "cen4020"},
     {"name": "CEN 4090L Software Engineering Capstone", "link": "cen4090l"},
     {"name": "CIS 3250 Ethics in Computer Science", "link": "cis3250"},
     {"name": "COP 4610 Operating Systems & Concurrent Programming", "link": "cop4610"},
-    {"name": "COP 4530 Data Structures, Algorithms, and Generic Programming II", "link": "cop4530"},
+    {"name": "COP 4530 Data Structures Programming II", "link": "cop4530"},
     {"name": "COP 4521 Secure Parallel & Distributed Programming w/ Python", "link": "cop4521"},
     {"name": "COT 4420 Theory of Computation", "link": "cot4420"}
 ]
@@ -109,12 +109,12 @@ def show_classes():
 
 @app.route('/<class_name>', methods=['GET'])
 def class_details(class_name):
+    class_data = next((item for item in classes if item["link"] == class_name), None)
     if class_name:
         quizzes = get_quizzes_by_course(class_name)
         if quizzes:
-            return render_template('class_details.html', class_name=class_name, quizzes=quizzes)
-    return render_template('class_details.html', class_name=class_name)
+            return render_template('class_details.html', class_name=class_data["name"], quizzes=quizzes)
+    return render_template('class_details.html',  class_name=class_data["name"] )
 
-    
 if __name__ == '__main__':
     app.run(debug=True)
