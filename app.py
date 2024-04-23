@@ -108,7 +108,7 @@ def show_classes():
 
 
 @app.route('/<class_name>', methods=['GET'])
-def class_details(class_name=None):
+def class_details(class_name):
     if class_name:
         quizzes = get_quizzes_by_course(class_name)
         if quizzes:
