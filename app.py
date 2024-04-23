@@ -97,7 +97,7 @@ def view_ratings():
     return render_template('ratings.html')
 
 
-@app.route('/quiz')
+@app.route('/take-quiz', methods=['POST'])
 def take_quiz():
     return render_template('takeQuiz.html')
 

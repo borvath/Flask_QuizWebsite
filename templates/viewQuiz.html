@@ -46,7 +46,7 @@
                 <td>{{ quiz.description}}</td>
                 <td>{{ quiz.questions | length }}</td>
                 <td>
-                    <form action="{{ url_for('take_quiz') }}" method="post">
+                    <form action="{{ url_for("take_quiz") }}" method="post">
                         <input type="hidden" name="quiz_id" value="{{ quizzes.id }}">
                         <button type="submit">Take Quiz</button>
                     </form>
