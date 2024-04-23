@@ -107,15 +107,14 @@ def show_classes():
     return render_template('ViewClasses.html', classes=classes)
 
 
-@app.route('/<class_name>')
-def class_details(class_name):
-    class_data = next((item for item in classes if item["link"] == class_name), None)
-    if class_data:
-        quizzes = get_quizzes_by_course(class_data["name"])
-        return render_template('class_details.html', class_name=class_data["name"], quizzes=quizzes)
-    else:
-        return "Class not found", 404
+@app.route('/<class_name>', methods=['GET'])
+def class_details(class_name=None):
+    if class_name:
+        quizzes = get_quizzes_by_course(class_name)
+        if quizzes:
+            return render_template('class_details.html', class_name=class_name, quizzes=quizzes)
+    return render_template('class_details.html')
 
-
+    
 if __name__ == '__main__':
     app.run(debug=True)
