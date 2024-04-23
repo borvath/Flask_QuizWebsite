@@ -78,3 +78,11 @@ def get_quiz_names():
 
 def get_courses():
     return execute_select_statement("SELECT DISTINCT course FROM quiz;")
+
+
+def get_quizzes_by_course(course):
+    select_query = "SELECT * FROM quiz WHERE course = %s;"
+    quizzes = execute_select_statement(select_query, (course,))
+    for quiz in quizzes:
+        quiz['questions'] = get_questions(quiz['id'])
+    return quizzes

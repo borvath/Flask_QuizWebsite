@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, a
 from forms import LoginForm, RegisterForm
 from auth import attempt_register, attempt_login, check_user_permissions
 from admin import admin_bp
-from quiz import create_quiz, get_quiz, get_all_quizzes, get_quiz_names
+from quiz import create_quiz, get_quiz, get_all_quizzes, get_quiz_names, get_quizzes_by_course
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "some_key"
@@ -111,10 +111,10 @@ def show_classes():
 def class_details(class_name):
     class_data = next((item for item in classes if item["link"] == class_name), None)
     if class_data:
-        return render_template('class_details.html', class_name=class_data["name"])
+        quizzes = get_quizzes_by_course(class_data["name"])
+        return render_template('class_details.html', class_name=class_data["name"], quizzes=quizzes)
     else:
         return "Class not found", 404
-
 
 if __name__ == '__main__':
     app.run(debug=True)
