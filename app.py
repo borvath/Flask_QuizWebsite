@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, a
 from forms import LoginForm, RegisterForm
 from auth import attempt_register, attempt_login, check_user_permissions
 from admin import admin_bp
-from quiz import create_quiz, get_quiz, get_all_quizzes, get_quiz_names, get_quizzes_by_course
+from quiz import create_quiz, get_quiz, get_all_quizzes, get_quiz_names, get_quizzes_by_course, get_quizzes_by_name
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "some_key"
@@ -96,9 +96,9 @@ def view_quizzes(quiz_name=None):
 def view_ratings():
     return render_template('ratings.html')
 
-
 @app.route('/take-quiz', methods=['POST'])
 def take_quiz():
+    return render_template('takeQuiz.html')
     if request.method == 'POST':
         quiz_name = request.form['quiz_name']
         quiz = get_quiz(quiz_name)
@@ -113,12 +113,19 @@ def show_classes():
 @app.route('/<class_name>', methods=['GET'])
 def class_details(class_name):
     class_data = next((item for item in classes if item["link"] == class_name), None)
-    if class_name:
+    if class_data: 
         quizzes = get_quizzes_by_course(class_name)
         if quizzes:
             return render_template('class_details.html', class_name=class_data["name"], quizzes=quizzes)
-    return render_template('class_details.html',  class_name=class_data["name"] )
+    return render_template('class_details.html', class_name=class_data["name"] if class_data else None)
 
+@app.route('/quiz/<quiz_name>', methods=['GET'])
+def quiz_details(quiz_name):
+    quiz = get_quizzes_by_name(quiz_name)
+    if quiz:
+        return render_template('quiz_details.html', quiz=quiz)
+    else:
+        return "Quiz not found", 404
 
 if __name__ == '__main__':
     app.run(debug=True)

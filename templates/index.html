@@ -17,7 +17,8 @@
         <div class="quiz-boxes">
             {% for quiz in quizzes %}
             <div class="quiz-box">
-                <h3>{{ quiz.name }}</h3>
+				<a href="/quiz/{{ quiz.name }}">
+					<h3>{{ quiz.name }}</h3></a>
                 <p>{{ quiz.questions|length }} Questions</p>
             </div>
             {% if loop.index % 3 == 0 %}
