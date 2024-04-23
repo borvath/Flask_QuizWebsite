@@ -107,7 +107,7 @@ def show_classes():
     return render_template('ViewClasses.html', classes=classes)
 
 
-@app.route('/class/<class_name>')
+@app.route('/<class_name>')
 def class_details(class_name):
     class_data = next((item for item in classes if item["link"] == class_name), None)
     if class_data:
