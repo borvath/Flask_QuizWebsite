@@ -21,3 +21,79 @@ h1.set-title {
     text-decoration: none;
     border-radius: 5px;
 }
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 130px;
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: #333; 
+}
+
+#classes-list {
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+ul {
+    padding: 0;
+}
+
+li {
+    background-color: #fff; 
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px; 
+}
+
+a {
+    text-decoration: none; 
+    color: black;
+}
+
+a:hover {
+    color: green;
+}
+
+.class-name {
+    font-size: 18px; 
+    font-weight: bold;
+    color: #333; 
+    text-align: center;
+    margin-top: 10px;
+}
+
+table {
+    table-layout: auto;
+    width: 80%;
+    border-collapse: collapse;
+    margin: 2em;
+    border-bottom: solid #000000 1px;
+}
+
+th, td {
+    padding: 4px;
+    text-align: left;
+}
+
+thead th{
+    color: white;
+    background-color: #094987;
+    border-bottom: solid #000000 2px;
+}
+
+tbody tr:nth-child(odd){
+    background-color: #eaeaea
+}
+

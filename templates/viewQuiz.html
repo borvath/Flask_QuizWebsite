@@ -1,29 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles/pages.css') }}" />
-        <title>View Quizzes</title>
-        <script>
-            window.onload = function() {
-                fetch('/api/quizzes') 
-                    .then(response => response.json())
-                    .then(quizzes => {
-                        const quizList = document.getElementById('quiz-list');
-                        quizzes.forEach(quiz => {
-                            const quizElement = document.createElement('div');
-                            quizElement.textContent = quiz.name; 
-                            quizList.appendChild(quizElement);
-                        });
-                    });
-            };
-        </script>
-    </head>
-    <a href="/" class="home-button" >Home</a>
-    
-    <body>
-        <h1>View Quizzes</h1>
-        <div id="quiz-list"></div>
-    </body>
-    </html>
+{% extends "common.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/table.css') }}" />
+    <script src="{{ url_for('static', filename='scripts/viewQuiz.js') }}" type="application/javascript" defer></script>
+{% endblock %}
+
+{% block title %}View Quizzes{% endblock %}
+
+{% block header %}
+    {{ super() }}
+{% endblock %}
+
+{% block main %}
+<a href="/" class="home-button" >Home</a>
+
+    <table>
+        <tr>
+            <th>Course</th>
+            <th>Quiz Name</th>
+            <th>Quiz Description</th>
+            <th>Number of Questions</th>
+            <th>Take Quiz</th>
+        </tr>
+
+        <!-- If it's just a single quiz it needs to be handled differently since it is not in a list.
+        Jinja2's "mapping" test is used to check to see if it's a dict or a list. The former implies a single quiz.-->
+        {% if quizzes is mapping %}
+            <tr>
+                <td>{{ quizzes.course }}</td>
+                <td>{{ quizzes.name }}</td>
+                <td>{{ quizzes.description}}</td>
+                <td>{{ quizzes.questions | length}}</td>
+                <td>
+                    <form action="{{ url_for('take_quiz') }}" method="post">
+                        <input type="hidden" name="quiz_id" value="{{ quizzes.id }}">
+                        <button type="submit">Take Quiz</button>
+                    </form>
+                </td>
+                
+            </tr>
+        {% else %}
+        {% for quiz in quizzes %}
+            <tr>
+                <td>{{ quiz.course }}</td>
+                <td>{{ quiz.name }}</td>
+                <td>{{ quiz.description}}</td>
+                <td>{{ quiz.questions | length }}</td>
+                <td>
+                    <form action="{{ url_for("take_quiz") }}" method="post">
+                        <input type="hidden" name="quiz_name" value="{{ quiz.name }}">
+                        <button type="submit">Take Quiz</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    </table>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "common.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/admin.css') }}" />
+{% endblock %}
+
+{% block title %}Admin{% endblock %}
+
+{% block header %}
+    {{ super() }}
+    <nav class="bottom_nav">
+        <a href="{{ url_for("admin.view_users") }}">Manage Users</a>
+        <a href="{{ url_for("admin.view_users") }}">Manage Quizzes</a>
+        <a href="{{ url_for("admin.view_logs") }}">View Logs</a>
+    </nav>
+{% endblock %}
+
+{% block main %}
+{% endblock %}

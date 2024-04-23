@@ -1,122 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/quiz.css') }}" />
-    <style>
-        .question-header, .answer-subheading {
-            font-size: 1.2em;
-            font-weight: bold;
-            font-family: Arial, sans-serif;
-            margin-bottom: 5px;
-        }
-    </style>
-</head>
-<body>
-    <h1 class="quiz-title">Quiz Creator</h1> <!-- Move the title to the top -->
+{% extends "common.html" %}
 
-    <a href="/" class="home-button">Home</a>
+{% block head %}
+	{{ super() }}
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/quiz.css') }}" />
+	<script src="{{ url_for('static', filename='scripts/createQuiz.js') }}" type="application/javascript" defer></script>
+{% endblock %}
 
-    <div id="quiz-title-container">
-        <h2>Quiz Title:</h2>
-        <input type="text" id="quiz-title">
-    </div>
+{% block title %}Create Quiz{% endblock %}
 
-    <div id="quiz-description-container">
-        <h2>Quiz Description:</h2>
-        <textarea id="quiz-description"></textarea>
-    </div>
-    <div id="questions-container">
-      
-    </div>
+{% block page_title %}Quiz Creator{% endblock %}
 
-    <button type="button" id="add-new-question" onclick="newQuestion()">Add New Question</button>
-    <button type="button" id="reset-form" onclick="resetForm()">Reset All</button>
-    <button type="button" id="save-quiz" onclick="saveQuiz()">Save Quiz</button>
-    
+{% block main %}
+	<form method="post" id="create-quiz-form">
+		<div id="quiz-title-container">
+			<h2>Quiz Title:</h2>
+			<label for="quiz-title"></label>
+			<input type="text" name="quiz-title" id="quiz-title"/>
+		</div>
+		<div id="quiz-description-container">
+			<h2>Quiz Description:</h2>
+			<label for="quiz-description"></label>
+			<textarea name="quiz-description" id="quiz-description"></textarea>
+		</div>
+		<div id="class-dropdown-container">
+			<h2>Select Class:</h2>
+			<label for="class-dropdown"></label>
+			<select name="course" id="class-dropdown"></select>
+		</div>
+		<div id="questions-container">
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            newQuestion(); // Initialize with one question
-        });
-
-        function newQuestion() {
-            const questionsContainer = document.getElementById('questions-container');
-            const questionNumber = questionsContainer.children.length + 1;
-            const questionContainer = document.createElement('div');
-            questionContainer.className = 'question-container';
-            questionContainer.innerHTML = `
-                <div id="question-${questionNumber}">
-                    <h2 class="question-header">Question:</h2>
-                    <textarea class="question-text" id="question-text-${questionNumber}"></textarea>
-                    <h2 class="answer-subheading">Answers:</h2>
-                    <div id="answer-container-${questionNumber}">
-                        <!-- Answer choices will be added here -->
-                    </div>
-                    <button type="button" onclick="newAnswer(${questionNumber})">Add Answer Choice</button>
-                    <button type="button" onclick="submitQuestion(${questionNumber})">Submit Question</button>
-                    <button type="button" onclick="resetQuestion(${questionNumber})">Reset Question</button>
-                    <button type="button" class="delete-question" onclick="this.parentNode.remove()">Delete Question</button>
-
-                </div>
-            `;
-            questionsContainer.appendChild(questionContainer);
-            newAnswer(questionNumber); // Add one initial answer choice
-        }
-
-        function newAnswer(questionNumber) {
-            const answerContainer = document.getElementById(`answer-container-${questionNumber}`);
-            const answerNumber = answerContainer.children.length + 1;
-            const answer = document.createElement('div');
-            answer.className = 'answer';
-            answer.innerHTML = `
-                <label class="answer-select">
-                    <input type="radio" name="answer-${questionNumber}" class="answer-choice-${questionNumber}">
-                </label>
-                <label class="answer-text-label">
-                    <textarea class="answer-text" id="text-answer-${questionNumber}-${answerNumber}"></textarea>
-                </label>
-                <button type="button" class="delete-answer" onclick="this.parentNode.remove()">X</button>
-            `;
-            answerContainer.appendChild(answer);
-        }
-
-        function resetQuestion(questionNumber) {
-            const questionContainer = document.getElementById(`question-${questionNumber}`);
-            questionContainer.querySelector('.question-text').value = '';
-            questionContainer.querySelectorAll('.answer').forEach(answer => answer.remove());
-            newAnswer(questionNumber); // Add one new answer choice
-        }
-
-        function resetForm() {
-            document.getElementById('questions-container').innerHTML = '';
-            newQuestion(); // Start fresh with one new question
-        }
-
-        function deleteQuestion(button) {
-            var questionContainer = button.parentNode.parentNode;
-            questionContainer.remove(); // Remove the entire question container
-        }
- 
-
-        function saveQuiz() {
-            const quizTitle = document.getElementById('quiz-title').value.trim();
-            const quizDescription = document.getElementById('quiz-description').value.trim();
-            const questions = [];
-
-            document.querySelectorAll('.question-container').forEach(container => {
-                const questionText = container.querySelector('.question-text').value.trim();
-                const answerChoices = Array.from(container.querySelectorAll('.answer-text')).map(area => area.value.trim());
-                const correctAnswer = Array.from(container.querySelectorAll('.answer-choice')).findIndex(choice => choice.checked);
-                questions.push({ questionText, answerChoices, correctAnswer });
-            });
-
-            console.log(JSON.stringify({ quizTitle, quizDescription, questions }));
-
-            
-            window.location.href = "/quizzes";
-        }
-    </script>
-</body>
-</html>
+		</div>
+		<button type="button" id="add-new-question" onclick="newQuestion()">Add New Question</button>
+		<button type="button" id="reset-form" onclick="resetForm()">Reset All</button>
+		<button type="submit" id="save-quiz" onclick="saveQuiz()">Save Quiz</button>
+	</form>
+{% endblock %}

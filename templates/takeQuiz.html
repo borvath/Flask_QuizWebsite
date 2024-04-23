@@ -1,16 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles/pages.css') }}" />
-        <title>Take a Quiz</title>
+{% extends "common.html" %}
+
+{% block head %}
+	{{ super() }}
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/quiz.css') }}" />
+	<script src="{{ url_for('static', filename='scripts/takeQuiz.js') }}" type="application/javascript" defer></script>
+{% endblock %}
+
+{% block title %}Take Quiz{% endblock %}
+
+
+{% block header %}
+    {{ super() }}
+{% endblock %}
+
+{% block main %}
+<a href="/" class="home-button" >Home</a>
+    {% if quizzes is mapping %}
+
+        <div id="quiz-title-container">
+            <h2>Quiz Title: {{ quizzes.name }}</h2>
+            <h2>Quiz Description: {{ quizzes.description }}</h2>
+        </div>
+       
     
-    </head>
-    <a href="/" class="home-button" >Home</a>
-    
-    <body>
-        <h1>Take a Quiz!</h1>
-        <div id="takeQuiz-list"></div>
-    </body>
-    </html>
+    {% else %}
+    {% for quiz in quizzes %}
+        <div id="quiz-title-container">
+            <h2>Quiz Title: {{ quiz.name }}</h2>
+            <h2>Quiz Description: {{ quiz.description }}</h2>
+        </div>
+        
+    {% endfor %}
+    {% endif %}
+{% endblock %}

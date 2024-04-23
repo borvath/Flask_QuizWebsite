@@ -5,7 +5,7 @@
 	<link rel="stylesheet" href="{{ url_for('static', filename='styles/table.css') }}" />
 {% endblock %}
 
-{% block title %}View Users{% endblock %}
+{% block title %}View Login Logs{% endblock %}
 
 {% block header %}
     {{ super() }}
@@ -21,9 +21,9 @@
             </tr>
         </thead>
         <tbody>
-            {% for user in users %}
+            {% for log in logs %}
                 <tr>
-                    {% for key, value in user.items() %}
+                    {% for key, value in log.items() %}
                        <td>{{ value }}</td>
                     {% endfor %}
                 </tr>
