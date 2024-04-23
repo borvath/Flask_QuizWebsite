@@ -22,15 +22,21 @@
 
         {% for quiz in quizzes %}
             {% for question in quiz.questions %}
+                {% if loop.first %}
+                    {% set correct_answer = None %}
+                {% endif %}
                 {% for answer in question.answers %}
                     {% if answer.is_correct %}
-                        <tr>
-                            <td>{{ quiz.name }}</td>
-                            <td>{{ question.question_text }}</td>
-                            <td>{{ answer.answer_text }}</td>
-                        </tr>
+                        {% set correct_answer = answer.answer_text %}
                     {% endif %}
                 {% endfor %}
+                {% if loop.last %}
+                    <tr>
+                        <td>{{ quiz.name }}</td>
+                        <td>{{ question.question_text }}</td>
+                        <td>{{ correct_answer }}</td>
+                    </tr>
+                {% endif %}
             {% endfor %}
         {% endfor %}
     </table>

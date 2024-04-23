@@ -1,16 +1,22 @@
 from flask import session
 from database import execute_select_statement, execute_non_select_statement
 
-
 def create_quiz(quiz_data):
     print(quiz_data)
     insert_query = "INSERT INTO quiz (author_id, name, course) VALUES (%s, %s, %s);"
+    
     # Extract course ID from form data
     course = quiz_data.get('course', None)
+    # Clean the course name to remove '/'
+    if course:
+        course = course.replace('/', '').strip() 
+    
     insert_values = (session['user_id'], quiz_data['quiz-title'], course)
     quiz_id = execute_non_select_statement(insert_query, insert_values)
+    
     if quiz_id is None:
         return False
+    
     i = 1
     while f"question-{i}-text" in quiz_data:
         question = {"question_text": quiz_data[f"question-{i}-text"]}
