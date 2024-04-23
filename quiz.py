@@ -89,3 +89,9 @@ def get_quizzes_by_course(course):
         quiz['questions'] = get_questions(quiz['id'])
     return quizzes
 
+def get_quizzes_by_name(quiz_name):
+    select_query = "SELECT * FROM quiz WHERE name = %s;"
+    quiz = execute_select_statement(select_query, (quiz_name,), num_results=1)
+    if quiz:
+        quiz['questions'] = get_questions(quiz['id'])
+    return quiz
