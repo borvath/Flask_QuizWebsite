@@ -116,5 +116,6 @@ def class_details(class_name):
             return render_template('class_details.html', class_name=class_data["name"], quizzes=quizzes)
     return render_template('class_details.html',  class_name=class_data["name"] )
 
+
 if __name__ == '__main__':
     app.run(debug=True)
