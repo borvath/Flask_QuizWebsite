@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/pages.css') }}" />
-
     <title>{{ quiz.name }} Details</title>
 </head>
 <body>
@@ -14,46 +13,23 @@
     <p><strong>Quiz Description:</strong> {{ quiz.description }}</p>
     <h2>Questions:</h2>
     <ul>
-   {% block main %}
-    <table>
-        <tr>
-            <th>Quiz Name</th>
-            <th>Number of Questions</th>
-            <th>Take Quiz</th>
-        </tr>
-
-
-        {% if quiz is mapping %}
-        <tr>
-            <td>{{ quiz.name }}</td>
-            <td>{{ quiz.questions | length}}</td>
-            <td>
-                <form action="{{ url_for('take_quiz') }}" method="post">
-                    <input type="hidden" name="quiz_id" value="{{ quiz.id }}">
-                    <button type="submit">Take Quiz</button>
-                </form>
-            </td>
-            
-        </tr>
-    {% else %}
-    {% for quiz in quiz.name %}
-        <tr>
-            <td>{{ quiz.name }}</td>
-            <td>{{ quiz.questions | length }}</td>
-
-            <td>
-                <form action="{{ url_for('take_quiz') }}" method="post">
-                    <input type="hidden" name="quiz_id" value="{{ quizzes.id }}">
-                    <button type="submit">Take Quiz</button>
-                </form>
-            </td>
-        </tr>
-    {% endfor %}
-{% endif %}
-</table>
-{% endblock %}
-
-
+        {% for question in quiz.questions %}
+            <li>
+                <h3>{{ question.question_text }}</h3>
+                <ul>
+                    {% for answer in question.answers %}
+                        <li>{{ answer.answer_text }}</li>
+                    {% endfor %}
+                </ul>
+                <p><strong>Correct Answer:</strong> 
+                    {% for answer in question.answers %}
+                        {% if answer.is_correct %}
+                            {{ answer.answer_text }}
+                        {% endif %}
+                    {% endfor %}
+                </p>
+            </li>
+        {% endfor %}
     </ul>
 </body>
 </html>

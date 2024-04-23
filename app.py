@@ -116,13 +116,13 @@ def class_details(class_name):
             return render_template('class_details.html', class_name=class_data["name"], quizzes=quizzes)
     return render_template('class_details.html', class_name=class_data["name"] if class_data else None)
 
-
 @app.route('/quiz/<quiz_name>', methods=['GET'])
 def quiz_details(quiz_name):
     quiz = get_quizzes_by_name(quiz_name)
     if quiz:
         return render_template('quiz_details.html', quiz=quiz)
-    return "Quiz not found", 404
+    else:
+        return "Quiz not found", 404
 
 if __name__ == '__main__':
     app.run(debug=True)
