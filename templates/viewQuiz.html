@@ -20,6 +20,19 @@
             <th>Correct Answer</th>
         </tr>
 
+        <!-- If it's just a single quiz it needs to be handled differently since it is not in a list.
+        Jinja2's "mapping" test is used to check to see if it's a dict or a list. The former implies a single quiz.-->
+        {% if quizzes is mapping %}
+            <tr>
+                <td>{{ quizzes.name }}</td>
+                {% for question in quizzes.questions %}
+                    {% for answer in question.answers %}
+                        <td>{{ question.question_text }}</td>
+                        <td>{{ answer.answer_text }}</td>
+                    {% endfor %}
+                {% endfor %}
+            </tr>
+        {% else %}
         {% for quiz in quizzes %}
             {% for question in quiz.questions %}
                 {% for answer in question.answers %}
@@ -34,5 +47,6 @@
                 {% endfor %}
             {% endfor %}
         {% endfor %}
+    {% endif %}
     </table>
 {% endblock %}

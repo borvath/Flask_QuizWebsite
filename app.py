@@ -89,7 +89,7 @@ def view_quizzes(quiz_name=None):
         if quiz is None:
             flash("Quiz does not exist")
             return redirect(url_for('index'))
-        return render_template('viewQuiz.html', quiz=quiz)
+        return render_template('viewQuiz.html', quizzes=quiz)
 
 
 @app.route('/rateQuiz')
