@@ -26,8 +26,8 @@ classes = [
 @app.route('/home', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
-
+    all_quizzes = get_all_quizzes()
+    return render_template('index.html', quizzes=all_quizzes)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

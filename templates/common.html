@@ -27,7 +27,7 @@
 			<a href="{{ url_for("logout") }}">Logout</a>
 		{% elif session['user_type'] in ['student', 'teacher'] %}
 			<a href="/class">Your Classes</a>
-			<a href="/rateQuiz">Ratings</a>
+			<a href="/rateQuiz">Ratings</a>				
 			<a href="/quizzes">View Quizzes</a>
 			<a href="/quiz-creator">Create New Quiz</a>
 			<a href="{{ url_for("logout") }}">Logout</a>

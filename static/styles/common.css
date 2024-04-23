@@ -133,3 +133,32 @@ footer {
     box-shadow: 0 5px #666;
     transform: translateY(4px);
 }
+
+.quiz-boxes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px; 
+}
+
+.quiz-box {
+    width: calc(33% - 20px); 
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px; 
+}
+
+.quiz-box h3 {
+    margin-top: 0;
+}
+
+.quiz-box p {
+    width: calc(33.33% - 10px); 
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 10px;
+}
