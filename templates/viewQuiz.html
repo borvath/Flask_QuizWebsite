@@ -49,7 +49,7 @@
                 <td>{{ quiz.questions | length }}</td>
                 <td>
                     <form action="{{ url_for("take_quiz") }}" method="post">
-                        <input type="hidden" name="quiz_id" value="{{ quizzes.id }}">
+                        <input type="hidden" name="quiz_name" value="{{ quiz.name }}">
                         <button type="submit">Take Quiz</button>
                     </form>
                 </td>
@@ -58,5 +58,3 @@
     {% endif %}
     </table>
 {% endblock %}
-
-<button type="button" id="take-quiz" onclick="takeQuiz()">Take Quiz</button>

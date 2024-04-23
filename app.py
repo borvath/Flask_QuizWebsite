@@ -99,7 +99,10 @@ def view_ratings():
 
 @app.route('/take-quiz', methods=['POST'])
 def take_quiz():
-    return render_template('takeQuiz.html')
+    if request.method == 'POST':
+        quiz_name = request.form['quiz_name']
+        quiz = get_quiz(quiz_name)
+        return render_template('takeQuiz.html', quizzes=quiz)
 
 
 @app.route('/class')
