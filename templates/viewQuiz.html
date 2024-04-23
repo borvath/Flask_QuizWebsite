@@ -16,17 +16,19 @@
         <tr>
             <th>Quiz Name</th>
             <th>Question</th>
-            <th>Answer</th>
+            <th>Correct Answer</th>
         </tr>
 
         {% for quiz in quizzes %}
             {% for question in quiz.questions %}
                 {% for answer in question.answers %}
-                    <tr>
-                        <td>{{ quiz.name }}</td>
-                        <td>{{ question.question_text }}</td>
-                        <td>{{ answer.answer_text }}</td>
-                    </tr>
+                    {% if answer.is_correct %}
+                        <tr>
+                            <td>{{ quiz.name }}</td>
+                            <td>{{ question.question_text }}</td>
+                            <td>{{ answer.answer_text }}</td>
+                        </tr>
+                    {% endif %}
                 {% endfor %}
             {% endfor %}
         {% endfor %}
