@@ -7,19 +7,21 @@ admin_bp = Blueprint('admin', __name__)
 
 @admin_bp.route("/admin/viewusers", methods=['GET', 'POST'])
 def view_users():
-    """Renders page where admins can view users that exist in the database."""
-    if request.method == "GET":
-        if check_user_permissions("admin"):
+    """Renders page where admins can view and manage users that exist in the database."""
+    if check_user_permissions("admin"):
+        if request.method == "GET":
             query = "SELECT id, username, last_name, first_name, type FROM user;"
             result = execute_select_statement(query, None)
             headings = ["ID", "Username", "Last Name", "First Name", "Type"]
             return render_template('admin_pages/view_users.html', users=result, headings=headings)
-    if request.method == "POST":
-        if check_user_permissions("admin"):
+
+        # Request to delete a user. Source of request is expected to be a button with the name 'user-delete'.
+        if request.method == "POST" and request.form.get('user-delete', None):
             query = "DELETE FROM user WHERE id = %s"
             values = (request.form.get('user-delete'),)
             execute_non_select_statement(query, values)
             return redirect(request.url)
+        abort(500)
     abort(403)
 
 
