@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS quiz (
     name VARCHAR(100) NOT NULL,
     description VARCHAR(500),
     course VARCHAR(50),
+    creation_time DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     UNIQUE INDEX name_UNIQUE (name ASC) VISIBLE,
     CONSTRAINT author_id FOREIGN KEY (author_id) REFERENCES user(id) ON DELETE CASCADE

@@ -12,3 +12,25 @@ def log_login(username):
         values = (user['id'],)
         return execute_non_select_statement(query, values)
     return False
+
+
+def get_all_quiz_creation_times(user_info=False):
+    if user_info:
+        query = ("SELECT quiz.id, quiz.author_id, quiz.name, user.username, quiz.creation_time"
+                 " FROM quiz INNER JOIN user WHERE quiz.author_id=user.id"
+                 " ORDER BY quiz.creation_time DESC;")
+    else:
+        query = "SELECT quiz.id, quiz.name, quiz.creation_time FROM quiz;"
+    quizzes = execute_select_statement(query)
+    return quizzes
+
+
+def get_quiz_creation_time(quiz_id, user_info=False):
+    if user_info:
+        query = ("SELECT quiz.id, quiz.name, user.id, user.username, quiz.creation_time"
+                 " FROM quiz INNER JOIN user WHERE quiz.id=%s AND quiz.author_id=user.id;")
+    else:
+        query = "SELECT quiz.id, quiz.name, quiz.creation_time FROM quiz WHERE quiz.id=%s;"
+    values = (quiz_id,)
+    quizzes = execute_select_statement(query, values)
+    return quizzes

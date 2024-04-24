@@ -1,0 +1,33 @@
+{% extends "admin_pages/admin.html" %}
+
+{% block head %}
+    {{ super() }}
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/table.css') }}" />
+{% endblock %}
+
+{% block title %}View Quiz Logs{% endblock %}
+
+{% block header %}
+    {{ super() }}
+{% endblock %}
+
+{% block main %}
+    <table>
+        <thead>
+            <tr>
+                {% for header in headings %}
+                    <th>{{ header }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+                <tr>
+                    {% for key, value in log.items() %}
+                       <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
