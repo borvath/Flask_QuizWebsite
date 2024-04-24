@@ -1,8 +1,10 @@
-from flask import session
+from flask import session, flash
 from database import execute_select_statement, execute_non_select_statement
 
 def create_quiz(quiz_data):
-    print(quiz_data)
+    if len(execute_select_statement("SELECT id FROM quiz WHERE name=%s", (quiz_data['quiz-title'],))) >= 1:
+        flash("Quiz name already used")
+        return False
     insert_query = "INSERT INTO quiz (author_id, name, description, course) VALUES (%s, %s, %s, %s);"
     
     course = quiz_data.get('course', None)
