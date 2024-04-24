@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/pages.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/quiz_details.css') }}" />
     <title>{{ quiz.name }} Details</title>
 </head>
 <body>
@@ -18,16 +18,13 @@
                 <h3>{{ question.question_text }}</h3>
                 <ul>
                     {% for answer in question.answers %}
-                        <li>{{ answer.answer_text }}</li>
-                    {% endfor %}
-                </ul>
-                <p><strong>Correct Answer:</strong> 
-                    {% for answer in question.answers %}
                         {% if answer.is_correct %}
-                            {{ answer.answer_text }}
+                            <li class="correct-answer">{{ answer.answer_text }}</li>
+                        {% else %}
+                            <li>{{ answer.answer_text }}</li>
                         {% endif %}
                     {% endfor %}
-                </p>
+                </ul>
             </li>
         {% endfor %}
     </ul>
