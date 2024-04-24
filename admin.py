@@ -34,7 +34,7 @@ def view_login_logs():
                  "FROM login_log INNER JOIN user ON login_log.user_id=user.id ORDER BY timestamp DESC;")
         result = execute_select_statement(query, None)
         headings = ["ID", "UserID", "Username", "Login Time"]
-        return render_template('admin_pages/view_logins.html', logs=result, headings=headings)
+        return render_template('admin_pages/view_login_logs.html', logs=result, headings=headings)
     abort(403)
 
 
