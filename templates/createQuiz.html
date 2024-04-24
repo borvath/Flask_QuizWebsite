@@ -11,6 +11,16 @@
 {% block page_title %}Quiz Creator{% endblock %}
 
 {% block main %}
+	{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			<script>
+                let messages = {{ messages | safe }};
+                for (let i=0; i<messages.length; i++) {
+                    alert(messages[i]);
+                }
+			</script>
+		{% endif %}
+	{% endwith %}
 	<form method="post" id="create-quiz-form">
 		<div id="quiz-title-container">
 			<h2>Quiz Title:</h2>
