@@ -29,8 +29,8 @@ def view_users():
 def view_logs():
     """Renders page where admins can view security logs such as login events."""
     if check_user_permissions("admin"):
-        query = ("SELECT loginLog.id, user_id, username, timestamp as logs "
-                 "FROM loginLog INNER JOIN user ON loginLog.user_id=user.id ORDER BY timestamp DESC;")
+        query = ("SELECT login_log.id, user_id, username, timestamp as logs "
+                 "FROM login_log INNER JOIN user ON login_log.user_id=user.id ORDER BY timestamp DESC;")
         result = execute_select_statement(query, None)
         headings = ["ID", "UserID", "Username", "Login Time"]
         return render_template('admin_pages/view_logins.html', logs=result, headings=headings)
