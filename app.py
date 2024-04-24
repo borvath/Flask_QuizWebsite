@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, a
 from forms import LoginForm, RegisterForm
 from auth import attempt_register, attempt_login, check_user_permissions
 from admin import admin_bp
-from quiz import create_quiz, get_quiz, get_all_quizzes, get_quiz_names, get_quizzes_by_course, get_quizzes_by_name,get_all_ratings,insert_rating
+from quiz import create_quiz, get_quiz, get_all_quizzes, get_quizzes_by_course, get_quizzes_by_name,get_all_ratings,insert_rating
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "some_key"
@@ -92,7 +92,6 @@ def view_quizzes(quiz_name=None):
         return render_template('viewQuiz.html', quizzes=quiz)
 
 
-
 @app.route('/rateQuiz')
 def view_quiz(quiz_name=None):
     if quiz_name is None:
@@ -108,6 +107,7 @@ def view_quiz(quiz_name=None):
             return redirect(url_for('index'))
         return render_template('ratings.html', quizzes=quiz)
 
+
 @app.route('/rateQuiz', methods=['GET', 'POST'])
 def rate_quiz():
     print("Yoo wassgood!")
@@ -117,12 +117,13 @@ def rate_quiz():
             flash('You must be logged in to submit ratings.')
             return redirect(url_for('login'))
 
-        quiz_id = request.form.get('quiz_id')
+        quiz_data = request.form
+        quiz_id = get_quizzes_by_name(quiz_data['quiz_name'])
         rating_text = request.form.get('rating_text')
         stars = request.form.get('stars')
-        print(stars,rating_text,quiz_id)
+        print(stars, rating_text, quiz_id)
         if quiz_id and rating_text and stars:
-            insert_rating(student_id, quiz_id, rating_text, int(stars))
+            insert_rating(quiz_id, rating_text, int(stars))
             flash('Your rating has been submitted!')
             return redirect(url_for('rate_quiz'))
         else:
@@ -132,9 +133,6 @@ def rate_quiz():
     quizzes = get_all_quizzes()
     ratings = get_all_ratings()
     return render_template('ratings.html', quizzes=quizzes, ratings=ratings)
-
-
-
 
 
 @app.route('/take-quiz', methods=['POST'])
