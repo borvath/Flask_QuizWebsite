@@ -23,7 +23,8 @@ tbody tr:nth-child(odd){
 
 .home-button {
     position: absolute;
-    left: 20px;
+    top: 20px;
+    right: 1230px;
     background-color: black;
     color: white;
     padding: 10px 20px;
