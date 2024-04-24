@@ -110,13 +110,18 @@ def show_classes():
     return render_template('ViewClasses.html', classes=classes)
 
 
-@app.route('/<class_name>', methods=['GET'])
+@app.route('/<class_name>', methods=['GET', 'POST'])
 def class_details(class_name):
     class_data = next((item for item in classes if item["link"] == class_name), None)
-    if class_data: 
-        quizzes = get_quizzes_by_course(class_name)
-        if quizzes:
-            return render_template('class_details.html', class_name=class_data["name"], quizzes=quizzes)
+    if class_data:
+        if request.method == 'POST':
+            quiz_name = request.form['quiz_name']
+            quiz = get_quiz(quiz_name)
+            return render_template('takeQuiz.html', quiz=quiz)
+        else:
+            quizzes = get_quizzes_by_course(class_name)
+            if quizzes:
+                return render_template('class_details.html', class_name=class_data["name"], quizzes=quizzes)
     return render_template('class_details.html', class_name=class_data["name"] if class_data else None)
 
 @app.route('/quiz/<quiz_name>', methods=['GET'])

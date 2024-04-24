@@ -3,51 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/pages.css',  ) }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/pages.css') }}" />
     <title>Welcome to Class</title>
 </head>
 <body>
-    <a href="/" class="home-button" >Home</a>
-    <a href="/class" class="back-button" >Back</a>
+    <a href="/" class="home-button">Home</a>
+    <a href="/class" class="back-button">Back</a>
 
-    <h1>Welcome to {{class_name}}</h1>
-    <p> View the quizzes below:</p>
-    {% block main %}
+    <h1>Welcome to {{ class_name }}</h1>
+    <p>View the quizzes below:</p>
     <table>
         <tr>
             <th>Quiz Name</th>
             <th>Number of Questions</th>
             <th>Take Quiz</th>
         </tr>
-
-
-        {% if quizzes is mapping %}
-        <tr>
-            <td>{{ quizzes.name }}</td>
-            <td>{{ quizzes.questions | length}}</td>
-            <td>
-                <form action="{{ url_for('take_quiz') }}" method="post">
-                    <input type="hidden" name="quiz_id" value="{{ quizzes.id }}">
-                    <button type="submit">Take Quiz</button>
-                </form>
-            </td>
-            
-        </tr>
-    {% else %}
-    {% for quiz in quizzes %}
+        {% for quiz in quizzes %}
         <tr>
             <td>{{ quiz.name }}</td>
             <td>{{ quiz.questions | length }}</td>
-
             <td>
                 <form action="{{ url_for('take_quiz') }}" method="post">
-                    <input type="hidden" name="quiz_id" value="{{ quizzes.id }}">
+                    <input type="hidden" name="quiz_name" value="{{ quiz.name }}">
                     <button type="submit">Take Quiz</button>
                 </form>
             </td>
         </tr>
-    {% endfor %}
-{% endif %}
-</table>
-{% endblock %}
-
+        {% endfor %}
+    </table>
+</body>
+</html>
