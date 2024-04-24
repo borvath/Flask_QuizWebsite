@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS course (
     section INT NOT NULL,
     teacher_id INT UNSIGNED NOT NULL,
     PRIMARY KEY (id),
-    CONSTRAINT teacher_id FOREIGN KEY (teacher_id) REFERENCES user(id)
+    CONSTRAINT teacher_id FOREIGN KEY (teacher_id) REFERENCES user(id)  ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS quiz (
@@ -27,9 +27,10 @@ CREATE TABLE IF NOT EXISTS quiz (
     name VARCHAR(100) NOT NULL,
     description VARCHAR(500),
     course VARCHAR(50),
+    creation_time DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     UNIQUE INDEX name_UNIQUE (name ASC) VISIBLE,
-    CONSTRAINT author_id FOREIGN KEY (author_id) REFERENCES user(id)
+    CONSTRAINT author_id FOREIGN KEY (author_id) REFERENCES user(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS question (
@@ -37,7 +38,7 @@ CREATE TABLE IF NOT EXISTS question (
     quiz_id INT UNSIGNED NOT NULL,
     question_text VARCHAR(500) NOT NULL,
     PRIMARY KEY (id),
-    CONSTRAINT quiz_id FOREIGN KEY (quiz_id) REFERENCES quiz(id)
+    CONSTRAINT quiz_id FOREIGN KEY (quiz_id) REFERENCES quiz(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS answer (
@@ -46,7 +47,7 @@ CREATE TABLE IF NOT EXISTS answer (
     answer_text VARCHAR(500) NOT NULL,
     is_correct BOOLEAN NOT NULL,
     PRIMARY KEY (id),
-    CONSTRAINT question_id FOREIGN KEY (question_id) REFERENCES question(id)
+    CONSTRAINT question_id FOREIGN KEY (question_id) REFERENCES question(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS ratings (
@@ -55,14 +56,14 @@ CREATE TABLE IF NOT EXISTS ratings (
     studentRatings VARCHAR(250),
     amountOfStars INT UNSIGNED CHECK (amountOfStars >= 1 AND amountOfStars <= 5),
     PRIMARY KEY (studentID, quizID),
-    CONSTRAINT quizID FOREIGN KEY (quizID) REFERENCES quiz(id),
-    CONSTRAINT studentID FOREIGN KEY (studentID) REFERENCES user(id)
+    CONSTRAINT quizID FOREIGN KEY (quizID) REFERENCES quiz(id) ON DELETE CASCADE,
+    CONSTRAINT studentID FOREIGN KEY (studentID) REFERENCES user(id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS loginLog (
+CREATE TABLE IF NOT EXISTS login_log (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     user_id INT UNSIGNED NOT NULL,
     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
-    CONSTRAINT user_id FOREIGN KEY (user_id) REFERENCES user(id)
+    CONSTRAINT user_id FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 );
