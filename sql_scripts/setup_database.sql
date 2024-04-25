@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS user (
     last_name VARCHAR(100),
     username VARCHAR(100) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    type ENUM('teacher', 'student', 'admin') NOT NULL,
+    type ENUM('student', 'admin') NOT NULL,
     PRIMARY KEY(id),
     UNIQUE INDEX username_UNIQUE (username ASC) VISIBLE
 );
