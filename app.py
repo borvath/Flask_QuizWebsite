@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, session, abort, flash
 from forms import LoginForm, RegisterForm
-from auth import attempt_register, attempt_login, check_user_permissions
+from auth import attempt_register, attempt_login, get_current_user_id, check_user_permissions
 from admin import admin_bp
 from teacher import teacher_bp
-from quiz import create_quiz, get_quiz, get_all_quizzes, get_quizzes_by_course, get_quizzes_by_name, get_all_ratings, insert_rating, get_current_user_id
+from quiz import create_quiz, get_quiz, get_all_quizzes, get_quizzes_by_course, get_quiz_by_name, get_all_ratings, insert_rating, grade_quiz
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "some_key"
@@ -117,7 +117,7 @@ def rate_quiz(quiz_name=None):
                 return redirect(url_for('index'))
             return render_template('ratings.html', quizzes=quiz)
     if request.method == 'POST':
-        quiz_id = get_quizzes_by_name(request.form['quiz_name'])['id']
+        quiz_id = get_quiz_by_name(request.form['quiz_name'])['id']
         rating_text = request.form.get('rating_text')
         stars = request.form.get('stars')
         if quiz_id and rating_text and stars:
@@ -129,12 +129,16 @@ def rate_quiz(quiz_name=None):
             return redirect(url_for('rate_quiz'))
 
 
-@app.route('/take-quiz', methods=['POST'])
-def take_quiz():
+@app.route('/take-quiz/<quiz_name>', methods=['GET', 'POST'])
+def take_quiz(quiz_name=None):
+    if request.method == "GET":
+        if quiz_name is None:
+            return redirect(url_for('index'))
+        quiz = get_quiz_by_name(quiz_name)
+        return render_template('takeQuiz.html', quiz=quiz, enumerate=enumerate)
     if request.method == 'POST':
-        quiz_name = request.form['quiz_name']
-        quiz = get_quiz(quiz_name)
-        return render_template('takeQuiz.html', quizzes=quiz)
+        grade_quiz(request.form)
+        return redirect(url_for('index'))
 
 
 @app.route('/class')
@@ -159,7 +163,7 @@ def class_details(class_name):
 
 @app.route('/quiz/<quiz_name>', methods=['GET'])
 def quiz_details(quiz_name):
-    quiz = get_quizzes_by_name(quiz_name)
+    quiz = get_quiz_by_name(quiz_name)
     if quiz:
         return render_template('quiz_details.html', quiz=quiz)
     else:

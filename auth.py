@@ -67,6 +67,12 @@ def attempt_register(data: dict) -> bool:
         return False
 
 
+def get_current_user_id():
+    query = "SELECT id FROM user WHERE username=%s"
+    values = (session['user'],)
+    return execute_select_statement(query, values)['id']
+
+
 def get_current_user_role() -> str:
     curr_role_dict = execute_select_statement(query="SELECT CURRENT_ROLE();", num_results=1)
     curr_role = curr_role_dict['CURRENT_ROLE()'].split('@')[0].strip('`')

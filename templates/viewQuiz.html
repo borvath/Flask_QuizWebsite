@@ -3,7 +3,6 @@
 {% block head %}
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/table.css') }}" />
-    <script src="{{ url_for('static', filename='scripts/viewQuiz.js') }}" type="application/javascript" defer></script>
 {% endblock %}
 
 {% block title %}View Quizzes{% endblock %}
@@ -14,7 +13,6 @@
 
 {% block main %}
 <a href="/" class="home-button" >Home</a>
-
     <table>
         <tr>
             <th>Course</th>
@@ -23,9 +21,6 @@
             <th>Number of Questions</th>
             <th>Take Quiz</th>
         </tr>
-
-        <!-- If it's just a single quiz it needs to be handled differently since it is not in a list.
-        Jinja2's "mapping" test is used to check to see if it's a dict or a list. The former implies a single quiz.-->
         {% if quizzes is mapping %}
             <tr>
                 <td>{{ quizzes.course }}</td>
@@ -33,12 +28,8 @@
                 <td>{{ quizzes.description}}</td>
                 <td>{{ quizzes.questions | length}}</td>
                 <td>
-                    <form action="{{ url_for('take_quiz') }}" method="post">
-                        <input type="hidden" name="quiz_id" value="{{ quizzes.id }}">
-                        <button type="submit">Take Quiz</button>
-                    </form>
+					<a href="{{ url_for('take_quiz', quiz_name=quiz['name']) }}"><button>Take Quiz</button></a>
                 </td>
-                
             </tr>
         {% else %}
         {% for quiz in quizzes %}
@@ -48,10 +39,7 @@
                 <td>{{ quiz.description}}</td>
                 <td>{{ quiz.questions | length }}</td>
                 <td>
-                    <form action="{{ url_for("take_quiz") }}" method="post">
-                        <input type="hidden" name="quiz_name" value="{{ quiz.name }}">
-                        <button type="submit">Take Quiz</button>
-                    </form>
+					<a href="{{ url_for('take_quiz', quiz_name=quiz['name']) }}"><button>Take Quiz</button></a>
                 </td>
             </tr>
         {% endfor %}

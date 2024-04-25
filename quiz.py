@@ -76,6 +76,18 @@ def get_answers(question_id):
     return execute_select_statement(select_query, (question_id,))
 
 
+def grade_quiz(form_data):
+    quiz = get_quiz_by_name(form_data['quiz_name'])
+    questions = quiz['questions']
+    num_correct = 0
+    for i, question in enumerate(questions):
+        answers = question['answers']
+        for j, answer in enumerate(answers):
+            if answer['is_correct'] == 1 and int(form_data[f'question_{i}']) == j:
+                num_correct += 1
+    flash(f"Your grade for this attempt is: {num_correct}/{len(questions)}")
+
+
 def get_quiz_names():
     return execute_select_statement("SELECT name FROM quiz;")
 
@@ -92,7 +104,7 @@ def get_quizzes_by_course(course):
     return quizzes
 
 
-def get_quizzes_by_name(quiz_name):
+def get_quiz_by_name(quiz_name):
     select_query = "SELECT * FROM quiz WHERE name = %s;"
     quiz = execute_select_statement(select_query, (quiz_name,), num_results=1)
     if quiz:
@@ -131,9 +143,3 @@ def get_ratings_by_quiz(quiz_id):
     WHERE r.quizID = %s;
     """
     return execute_select_statement(select_query, (quiz_id,))
-
-
-def get_current_user_id():
-    query = "SELECT id FROM user WHERE username=%s"
-    values = (session['user'],)
-    return execute_select_statement(query, values)['id']
