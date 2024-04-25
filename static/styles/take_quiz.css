@@ -1,0 +1,127 @@
+body {
+    display: flex;  
+    flex-direction: column;
+    align-items: center;
+    background-color: lightgrey;
+ }
+ 
+ 
+ h1.set-title {
+    text-align: center;
+    margin-top: 20px;
+    width: 100%;
+ }
+ 
+ 
+ .home-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+ }
+ .back-button {
+    position: absolute;
+    top: 20px;
+    left: 130px;
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+ }
+ 
+ 
+ h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: #333;
+ }
+ 
+ 
+ #classes-list {
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 20px;
+ }
+ 
+ 
+ ul {
+    padding: 0;
+    list-style: none;
+ }
+ 
+ 
+ li {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+ }
+ 
+ 
+ a {
+    text-decoration: none;
+    color: black;
+ }
+ 
+ 
+ a:hover {
+    color: green;
+ }
+ 
+ 
+ .class-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-top: 10px;
+ }
+ 
+ 
+ .correct-answer {
+    color: white;
+    background-color: green;
+ }
+ 
+ 
+ table {
+    table-layout: auto;
+    width: 60%;
+    border-collapse: collapse;
+    margin: 2em;
+    border-bottom: solid #000000 1px;
+ }
+ 
+ 
+ th, td {
+    padding: 2px;
+    text-align: left;
+ }
+ 
+ 
+ thead th{
+    color: white;
+    background-color: #094987;
+    border-bottom: solid #000000 20px;
+ }
+ 
+ 
+ tbody tr:nth-child(odd){
+    background-color: #eaeaea
+ }
+ 
+ 
+ .question-box {
+    border: 1px solid #000;
+    padding: 30px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #eaeaea;
+ }
+ 
