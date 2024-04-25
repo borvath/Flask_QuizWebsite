@@ -16,7 +16,7 @@
 
 
 {% block main %}
-<body>
+
 <a href="/" class="home-button" >Home</a>
 <form method="post">
    <h1>{{ quiz['name'] }}</h1>
@@ -26,7 +26,7 @@
    <h2><center>Questions: </center></h2>
    <br>
    <div>
-       <ul>
+       
    {% for i, question in enumerate(quiz['questions']) %}
    <div class="question-box">
        <h3>{{ question['question_text'] }}</h3>
@@ -46,6 +46,5 @@
    <br>
    <button type="submit" id="submit-quiz">Submit Quiz</button>
 </form>
-</body>
 {% endblock %}
 
