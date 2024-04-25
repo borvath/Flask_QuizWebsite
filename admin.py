@@ -16,10 +16,24 @@ def view_users():
             headings = ["ID", "Username", "Last Name", "First Name", "Type"]
             return render_template('admin_pages/view_users.html', users=result, headings=headings)
 
-        # Request to delete a user. Source of request is expected to be a button with the name 'user-delete'.
+        # Request to delete a user.
+        # Source of request is expected to be a button with the name 'user-delete'.
         if request.method == "POST" and request.form.get('user-delete', None):
             query = "DELETE FROM user WHERE id = %s"
             values = (request.form.get('user-delete'),)
+            execute_non_select_statement(query, values)
+            return redirect(request.url)
+
+        # Request to update a user.
+        # Source of request is expected to be a form with an input with the name 'update-userid'
+        # Expects the following field names: update-username, update-firstname, update-lastname, and update-userid.
+        elif request.method == "POST" and request.form.get('update-userid', None):
+            query = ("UPDATE user SET "
+                     "username = %s, first_name = %s, last_name = %s "
+                     "WHERE id=%s;")
+            values = (request.form['update-username'],
+                      request.form['update-firstname'], request.form['update-lastname'],
+                      request.form['update-userid'])
             execute_non_select_statement(query, values)
             return redirect(request.url)
         abort(500)
