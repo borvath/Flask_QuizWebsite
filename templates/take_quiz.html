@@ -1,38 +1,50 @@
 {% extends "common.html" %}
 
+
 {% block head %}
    {{ super() }}
    <link rel="stylesheet" href="{{ url_for('static', filename='styles/take_quiz.css') }}" />
 {% endblock %}
 
+
 {% block title %}Take Quiz{% endblock %}
+
 
 {% block header %}
    {{ super() }}
 {% endblock %}
 
+
 {% block main %}
 <body>
 <a href="/" class="home-button" >Home</a>
 <form method="post">
-	<h1>{{ quiz['name'] }}</h1>
-	<p><strong>Quiz Description:</strong> {{ quiz['description'] }}</p>
-	<h2>Questions:</h2>
-	{% for i, question in enumerate(quiz['questions']) %}
-		<h5>{{ question['question_text'] }}</h5>
-		<div>
-			{% for j, answer in enumerate(question['answers']) %}
-				<label>
-					<input type="radio" name="question_{{ i }}" value="{{ j }}">
-				</label>
-				{{ answer.answer_text }}
-			{% endfor %}
-		</div>
-	{% endfor %}
-	<label>
-		<input hidden type="text" value="{{ quiz['name'] }}" name="quiz_name">
-	</label>
-	<button type="submit" id="submit-quiz">Submit Quiz</button>
+   <h1>{{ quiz['name'] }}</h1>
+   <br>
+   <p><strong>Quiz Description:</strong> {{ quiz['description'] }}</p>
+   <br>
+   <h2><center>Questions: </center></h2>
+   <br>
+   <div>
+       <ul>
+   {% for i, question in enumerate(quiz['questions']) %}
+   <div class="question-box">
+       <h3>{{ question['question_text'] }}</h3>
+       <br>
+           {% for j, answer in enumerate(question['answers']) %}
+               <label>
+                   <input type="radio" name="question_{{ i }}" value="{{ j }}">
+               </label>
+               {{ answer.answer_text }}
+           {% endfor %}
+   </div>
+   {% endfor %}
+   </div>
+   <label>
+       <input hidden type="text" value="{{ quiz['name'] }}" name="quiz_name">
+   </label>
+   <br>
+   <button type="submit" id="submit-quiz">Submit Quiz</button>
 </form>
+</body>
 {% endblock %}
-
