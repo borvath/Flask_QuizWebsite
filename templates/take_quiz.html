@@ -1,0 +1,36 @@
+{% extends "common.html" %}
+
+{% block head %}
+	{{ super() }}
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/pages.css') }}" />
+{% endblock %}
+
+{% block title %}Take Quiz{% endblock %}
+
+{% block header %}
+    {{ super() }}
+{% endblock %}
+
+{% block main %}
+<a href="/" class="home-button" >Home</a>
+<form method="post">
+	<h1>{{ quiz['name'] }}</h1>
+	<p><strong>Quiz Description:</strong> {{ quiz['description'] }}</p>
+	<h2>Questions:</h2>
+	{% for i, question in enumerate(quiz['questions']) %}
+		<h5>{{ question['question_text'] }}</h5>
+		<div>
+			{% for j, answer in enumerate(question['answers']) %}
+				<label>
+					<input type="radio" name="question_{{ i }}" value="{{ j }}">
+				</label>
+				{{ answer.answer_text }}
+			{% endfor %}
+		</div>
+	{% endfor %}
+	<label>
+		<input hidden type="text" value="{{ quiz['name'] }}" name="quiz_name">
+	</label>
+	<button type="submit" id="submit-quiz">Submit Quiz</button>
+</form>
+{% endblock %}

@@ -11,22 +11,32 @@
 
 
 {% block main %}
+{% with messages = get_flashed_messages() %}
+	{% if messages %}
+		<script>
+			let messages = {{ messages | safe }};
+			for (let i=0; i<messages.length; i++) {
+				alert(messages[i]);
+			}
+		</script>
+	{% endif %}
+{% endwith %}
 <section class="hero">
-    <div class="hero-content">
-        <h1>Most Recent Quizzes You Made</h1>
-        <div class="quiz-boxes">
-            {% for quiz in quizzes %}
-            <div class="quiz-box">
-                <h3>{{ quiz.name }}</h3>
-                <p>{{ quiz.questions|length }} Questions</p>
-            </div>
-            {% if loop.index % 3 == 0 %}
-            </div>
-            <div class="quiz-boxes">
-            {% endif %}
-            {% endfor %}
-        </div>
-    </div>
+	<div class="hero-content">
+		<h1>Most Recent Quizzes</h1>
+		<div class="quiz-boxes">
+			{% for quiz in quizzes %}
+			<div class="quiz-box">
+				<a href="/quiz/{{ quiz.name }}">
+					<h3>{{ quiz.name }}</h3></a>
+				<p>{{ quiz.questions|length }} Questions</p>
+			</div>
+			{% if loop.index % 3 == 0 %}
+			</div>
+			<div class="quiz-boxes">
+			{% endif %}
+			{% endfor %}
+		</div>
+	</div>
 </section>
-
 {% endblock %}

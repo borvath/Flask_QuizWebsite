@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, session, abort, flash
 from forms import LoginForm, RegisterForm
-from auth import attempt_register, attempt_login, check_user_permissions
+from auth import attempt_register, attempt_login, get_current_user_id, check_user_permissions
+from quiz import create_quiz, get_quiz, get_all_quizzes, get_quizzes_by_course, get_quiz_by_name, grade_quiz
+from rating import insert_rating, get_all_ratings
 from admin import admin_bp
-from quiz import create_quiz, get_quiz, get_all_quizzes, get_quiz_names, get_quizzes_by_course
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "some_key"
@@ -26,8 +27,11 @@ classes = [
 @app.route('/home', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
+    if 'user_id' not in session and 'user' in session:
+        session.update({'user_id': get_current_user_id()})
     all_quizzes = get_all_quizzes()
     return render_template('index.html', quizzes=all_quizzes)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -65,7 +69,7 @@ def logout():
 def quiz_creator():
     if check_user_permissions("user"):
         if request.method == "GET":
-            return render_template('createQuiz.html')
+            return render_template('create_quiz.html')
         if request.method == "POST":
             if create_quiz(request.form):
                 flash("Success!")
@@ -83,41 +87,86 @@ def view_quizzes(quiz_name=None):
         if quizzes is None:
             flash("No quizzes found")
             return redirect(url_for('index'))
-        return render_template('viewQuiz.html', quizzes=quizzes)
+        return render_template('view_quiz.html', quizzes=quizzes)
     else:
         quiz = get_quiz(quiz_name)
         if quiz is None:
             flash("Quiz does not exist")
             return redirect(url_for('index'))
-        return render_template('viewQuiz.html', quizzes=quiz)
+        return render_template('view_quiz.html', quizzes=quiz)
 
 
-@app.route('/rateQuiz')
-def view_ratings():
-    return render_template('ratings.html')
-
-
-@app.route('/take-quiz', methods=['POST'])
-def take_quiz():
+@app.route('/rateQuiz', methods=['GET', 'POST'])
+def rate_quiz(quiz_name=None):
+    if not check_user_permissions("user"):
+        flash("You must be logged in to review quizzes")
+        redirect(url_for('index'))
+    if request.method == "GET":
+        if quiz_name is None:
+            quizzes = get_all_quizzes()
+            ratings = get_all_ratings()
+            if quizzes is None:
+                flash("No quizzes found")
+                return redirect(url_for('index'))
+            return render_template('ratings.html', quizzes=quizzes, ratings=ratings)
+        else:
+            quiz = get_quiz(quiz_name)
+            if quiz is None:
+                flash("Quiz does not exist")
+                return redirect(url_for('index'))
+            return render_template('ratings.html', quizzes=quiz)
     if request.method == 'POST':
-        quiz_name = request.form['quiz_name']
-        quiz = get_quiz(quiz_name)
-        return render_template('takeQuiz.html', quizzes=quiz)
+        quiz_id = get_quiz_by_name(request.form['quiz_name'])['id']
+        rating_text = request.form.get('rating_text')
+        stars = request.form.get('stars')
+        if quiz_id and rating_text and stars:
+            insert_rating(quiz_id, rating_text, int(stars))
+            flash('Your rating has been submitted!')
+            return redirect(url_for('rate_quiz'))
+        else:
+            flash('All fields are required!')
+            return redirect(url_for('rate_quiz'))
+
+
+@app.route('/take-quiz/<quiz_name>', methods=['GET', 'POST'])
+def take_quiz(quiz_name=None):
+    if request.method == "GET":
+        if quiz_name is None:
+            return redirect(url_for('index'))
+        quiz = get_quiz_by_name(quiz_name)
+        return render_template('take_quiz.html', quiz=quiz, enumerate=enumerate)
+    if request.method == 'POST':
+        grade_quiz(request.form)
+        return redirect(url_for('index'))
 
 
 @app.route('/class')
 def show_classes():
-    return render_template('ViewClasses.html', classes=classes)
+    return render_template('view_classes.html', classes=classes)
 
 
-@app.route('/<class_name>', methods=['GET'])
+@app.route('/<class_name>', methods=['GET', 'POST'])
 def class_details(class_name):
     class_data = next((item for item in classes if item["link"] == class_name), None)
-    if class_name:
-        quizzes = get_quizzes_by_course(class_name)
-        if quizzes:
-            return render_template('class_details.html', class_name=class_data["name"], quizzes=quizzes)
-    return render_template('class_details.html',  class_name=class_data["name"] )
+    if class_data:
+        if request.method == 'POST':
+            quiz_name = request.form['quiz_name']
+            quiz = get_quiz(quiz_name)
+            return render_template('take_quiz.html', quiz=quiz)
+        else:
+            quizzes = get_quizzes_by_course(class_name)
+            if quizzes:
+                return render_template('class_details.html', class_name=class_data["name"], quizzes=quizzes)
+    return render_template('class_details.html', class_name=class_data["name"] if class_data else None)
+
+
+@app.route('/quiz/<quiz_name>', methods=['GET'])
+def quiz_details(quiz_name):
+    quiz = get_quiz_by_name(quiz_name)
+    if quiz:
+        return render_template('quiz_details.html', quiz=quiz)
+    else:
+        return "Quiz not found", 404
 
 
 if __name__ == '__main__':

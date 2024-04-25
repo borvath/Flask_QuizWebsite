@@ -1,8 +1,11 @@
-from flask import session
+from flask import session, flash
 from database import execute_select_statement, execute_non_select_statement
 
+
 def create_quiz(quiz_data):
-    print(quiz_data)
+    if len(execute_select_statement("SELECT id FROM quiz WHERE name=%s", (quiz_data['quiz-title'],))) >= 1:
+        flash("Quiz name already used")
+        return False
     insert_query = "INSERT INTO quiz (author_id, name, description, course) VALUES (%s, %s, %s, %s);"
     
     course = quiz_data.get('course', None)
@@ -28,8 +31,6 @@ def create_quiz(quiz_data):
         create_question(quiz_id, question)
         i += 1
     return True
-
-
 
 
 def create_question(quiz_id, question_data):
@@ -75,8 +76,21 @@ def get_answers(question_id):
     return execute_select_statement(select_query, (question_id,))
 
 
+def grade_quiz(form_data):
+    quiz = get_quiz_by_name(form_data['quiz_name'])
+    questions = quiz['questions']
+    num_correct = 0
+    for i, question in enumerate(questions):
+        answers = question['answers']
+        for j, answer in enumerate(answers):
+            if answer['is_correct'] == 1 and int(form_data[f'question_{i}']) == j:
+                num_correct += 1
+    flash(f"Your grade for this attempt is: {num_correct}/{len(questions)}")
+
+
 def get_quiz_names():
     return execute_select_statement("SELECT name FROM quiz;")
+
 
 def get_courses():
     return execute_select_statement("SELECT DISTINCT course FROM quiz;")
@@ -89,3 +103,10 @@ def get_quizzes_by_course(course):
         quiz['questions'] = get_questions(quiz['id'])
     return quizzes
 
+
+def get_quiz_by_name(quiz_name):
+    select_query = "SELECT * FROM quiz WHERE name = %s;"
+    quiz = execute_select_statement(select_query, (quiz_name,), num_results=1)
+    if quiz:
+        quiz['questions'] = get_questions(quiz['id'])
+    return quiz

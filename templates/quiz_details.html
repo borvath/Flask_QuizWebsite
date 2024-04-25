@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/quiz_details.css') }}" />
+    <title>{{ quiz.name }} Details</title>
+</head>
+<body>
+    <a href="/" class="home-button">Home</a>
+    
+    <h1>{{ quiz.name }}</h1>
+    <p><strong>Quiz Description:</strong> {{ quiz.description }}</p>
+    <h2>Questions:</h2>
+    <ul>
+        {% for question in quiz.questions %}
+            <li>
+                <h3>{{ question.question_text }}</h3>
+                <ul>
+                    {% for answer in question.answers %}
+                        {% if answer.is_correct %}
+                            <li class="correct-answer">{{ answer.answer_text }}</li>
+                        {% else %}
+                            <li>{{ answer.answer_text }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

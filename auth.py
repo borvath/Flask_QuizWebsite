@@ -34,7 +34,7 @@ def attempt_login(data: dict) -> bool:
 
 def change_connected_user():
     if "user_type" in session:
-        if session["user_type"] in ['student', 'teacher']:
+        if session["user_type"] in ['student']:
             change_db_connection('user', 'user_password')
         elif session["user_type"] in ['admin']:
             change_db_connection('admin', 'admin_password')
@@ -65,6 +65,12 @@ def attempt_register(data: dict) -> bool:
     else:
         session['register_error'] = "Unable to register"
         return False
+
+
+def get_current_user_id():
+    query = "SELECT id FROM user WHERE username=%s"
+    values = (session['user'],)
+    return execute_select_statement(query, values)['id']
 
 
 def get_current_user_role() -> str:

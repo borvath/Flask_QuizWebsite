@@ -1,15 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/pages.css') }}" />
-    <title>View Ratings</title>
-</head>
-<a href="/" class="home-button" >Home</a>
+{% extends "common.html" %}
 
-<body>
-    <h1>Ratings</h1>
-    <div id="ratings-list"></div>
-</body>
-</html>
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/table.css') }}" />
+{% endblock %}
+
+{% block title %}Quiz Ratings{% endblock %}
+
+{% block header %}
+    {{ super() }}
+{% endblock %}
+
+{% block main %}
+<a href="/" class="home-button">Home</a>
+	{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			<script>
+                let messages = {{ messages | safe }};
+                for (let i=0; i<messages.length; i++) {
+                    alert(messages[i]);
+                }
+			</script>
+		{% endif %}
+	{% endwith %}
+<!-- Rating Submission Form -->
+<form method="post" action="{{ url_for('rate_quiz') }}">
+    <label for="course">Course:</label>
+    <select id="course" name="course">
+        {% for quiz in quizzes %}
+        <option value="{{ quiz.course }}">{{ quiz.course }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="quiz_name">Quiz Name:</label>
+    <select id="quiz_name" name="quiz_name">
+        {% for quiz in quizzes %}
+        <option value="{{ quiz.name }}">{{ quiz.name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="rating_text">Rating:</label>
+    <input type="text" id="rating_text" name="rating_text" required>
+
+    <label for="stars">Stars:</label>
+    <select id="stars" name="stars">
+        <option value="1">1 Star</option>
+        <option value="2">2 Stars</option>
+        <option value="3">3 Stars</option>
+        <option value="4">4 Stars</option>
+        <option value="5">5 Stars</option>
+    </select>
+    <button type="submit">Submit</button>
+</form>
+
+<!-- Ratings Table -->
+{% if quizzes %}
+	<table>
+		<tr>
+			<th>Course</th>
+			<th>Quiz Name</th>
+			<th>Rating Text</th>
+			<th>Stars</th>
+		</tr>
+		{% for quiz in quizzes %}
+			<tr>
+				<td>{{ quiz.course }}</td>
+				<td>{{ quiz.name }}</td>
+				<td colspan="2">Ratings:</td>
+			</tr>
+			{% if ratings %}
+				{% for rating in ratings %}
+					{% if rating['quizID'] == quiz['id'] %}
+						<tr>
+							<td colspan="2"></td>
+							<td>{{ rating.studentRatings }}</td>
+							<td>{{ rating.amountOfStars }} Stars</td>
+						</tr>
+					{% endif %}
+				{% endfor %}
+			{% else %}
+				<tr>
+					<td colspan="4">No ratings available.</td>
+				</tr>
+			{% endif %}
+		{% endfor %}
+	</table>
+{% else %}
+	<p>No quizzes available to rate.</p>
+{% endif %}
+{% endblock %}

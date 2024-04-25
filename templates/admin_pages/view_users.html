@@ -3,6 +3,7 @@
 {% block head %}
     {{ super() }}
 	<link rel="stylesheet" href="{{ url_for('static', filename='styles/table.css') }}" />
+    <script src="{{ url_for('static', filename='scripts/updateUser.js') }}" type="application/javascript" defer></script>
 {% endblock %}
 
 {% block title %}View Users{% endblock %}
@@ -12,12 +13,30 @@
 {% endblock %}
 
 {% block main %}
+    <!-- Form to update user information. Should only be displayed when an update button in a user row is pressed. -->
+    <div class="update-form" id="update-user-form" style="display:none">
+        <form method="post">
+            <input type="hidden" id="update-userid" name="update-userid"/>
+
+            <label for="update-username">Username</label>
+            <input type="text" id="update-username" name="update-username" required/>
+            <label for="update-firstname">First Name</label>
+            <input type="text" id="update-firstname" name="update-firstname" required/>
+            <label for="update-lastname">Last Name</label>
+            <input type="text" id="update-lastname" name="update-lastname" required/>
+
+            <button type="submit" name="user-update">Submit</button>
+            <button type="button" onclick="closeUserUpdateForm()">Cancel</button>
+        </form>
+    </div>
+
     <table>
         <thead>
             <tr>
                 {% for header in headings %}
                     <th>{{ header }}</th>
                 {% endfor %}
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +45,16 @@
                     {% for key, value in user.items() %}
                        <td>{{ value }}</td>
                     {% endfor %}
+                    <td>
+                        <form method="post">
+                            <button type="submit" name="user-delete" value="{{ user.id }}">Delete</button>
+                            <button type="button" name="open-update-form" onclick="openUserUpdateForm(
+                                    {{ user.id }},
+                                    '{{ user.username }}',
+                                    '{{ user.first_name }}',
+                                    '{{ user.last_name }}')">Update</button>
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

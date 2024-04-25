@@ -25,7 +25,7 @@
 			<a href="/quiz">Take a Quiz</a>
 			<a href="{{ url_for("admin.view_users") }}">Manage</a>
 			<a href="{{ url_for("logout") }}">Logout</a>
-		{% elif session['user_type'] in ['student', 'teacher'] %}
+		{% elif session['user_type'] in ['student'] %}
 			<a href="/class">Your Classes</a>
 			<a href="/rateQuiz">Ratings</a>				
 			<a href="/quizzes">View Quizzes</a>
