@@ -19,16 +19,13 @@
             <th>Take Quiz</th>
         </tr>
         {% for quiz in quizzes %}
-        <tr>
-            <td>{{ quiz.name }}</td>
-            <td>{{ quiz.questions | length }}</td>
-            <td>
-                <form action="{{ url_for('take_quiz') }}" method="post">
-                    <input type="hidden" name="quiz_name" value="{{ quiz.name }}">
-                    <button type="submit">Take Quiz</button>
-                </form>
-            </td>
-        </tr>
+			<tr>
+				<td>{{ quiz.name }}</td>
+				<td>{{ quiz.questions | length }}</td>
+				<td>
+					<a href="{{ url_for('take_quiz', quiz_name=quiz['name']) }}"><button>Take Quiz</button></a>
+				</td>
+			</tr>
         {% endfor %}
     </table>
 </body>
