@@ -55,3 +55,6 @@ Shelley was responsible for the login page and ratings.
 Aditi was responsible for quizzes and courses.
 Anoushka was also responsible for quizzes.
 
+
+#### Additional Note
+The setup.sh script is not required for the project in any way. It was purely a utility for project members to use while developing.
