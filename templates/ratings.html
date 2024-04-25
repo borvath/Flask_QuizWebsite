@@ -13,7 +13,16 @@
 
 {% block main %}
 <a href="/" class="home-button">Home</a>
-
+	{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			<script>
+                let messages = {{ messages | safe }};
+                for (let i=0; i<messages.length; i++) {
+                    alert(messages[i]);
+                }
+			</script>
+		{% endif %}
+	{% endwith %}
 <!-- Rating Submission Form -->
 <form method="post" action="{{ url_for('rate_quiz') }}">
     <label for="course">Course:</label>
@@ -41,45 +50,42 @@
         <option value="4">4 Stars</option>
         <option value="5">5 Stars</option>
     </select>
-
     <button type="submit">Submit</button>
 </form>
 
 <!-- Ratings Table -->
 {% if quizzes %}
-<table>
-    <tr>
-        <th>Course</th>
-        <th>Quiz Name</th>
-        <th>Rating Text</th>
-        <th>Stars</th>
-    </tr>
-    {% for quiz in quizzes %}
-    <tr>
-        <td>{{ quiz.course }}</td>
-        <td>{{ quiz.name }}</td>
-        <td colspan="2">Ratings:</td>
-    </tr>
-    {% if ratings %}
-    {% for rating in ratings if rating.quiz_id == quiz.id %}
-    <tr>
-        <td colspan="2"></td>
-        <td>{{ rating.studentRatings }}</td>
-        <td>{{ rating.amountOfStars }} Stars</td>
-    </tr>
-    {% else %}
-    <tr>
-        <td colspan="4">No ratings available for this quiz.</td>
-    </tr>
-    {% endfor %}
-    {% else %}
-    <tr>
-        <td colspan="4">No ratings available.</td>
-    </tr>
-    {% endif %}
-    {% endfor %}
-</table>
+	<table>
+		<tr>
+			<th>Course</th>
+			<th>Quiz Name</th>
+			<th>Rating Text</th>
+			<th>Stars</th>
+		</tr>
+		{% for quiz in quizzes %}
+			<tr>
+				<td>{{ quiz.course }}</td>
+				<td>{{ quiz.name }}</td>
+				<td colspan="2">Ratings:</td>
+			</tr>
+			{% if ratings %}
+				{% for rating in ratings %}
+					{% if rating['quizID'] == quiz['id'] %}
+						<tr>
+							<td colspan="2"></td>
+							<td>{{ rating.studentRatings }}</td>
+							<td>{{ rating.amountOfStars }} Stars</td>
+						</tr>
+					{% endif %}
+				{% endfor %}
+			{% else %}
+				<tr>
+					<td colspan="4">No ratings available.</td>
+				</tr>
+			{% endif %}
+		{% endfor %}
+	</table>
 {% else %}
-<p>No quizzes available to rate.</p>
+	<p>No quizzes available to rate.</p>
 {% endif %}
 {% endblock %}

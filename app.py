@@ -99,13 +99,17 @@ def view_quizzes(quiz_name=None):
 
 @app.route('/rateQuiz', methods=['GET', 'POST'])
 def rate_quiz(quiz_name=None):
+    if not check_user_permissions("user"):
+        flash("You must be logged in to review quizzes")
+        redirect(url_for('index'))
     if request.method == "GET":
         if quiz_name is None:
             quizzes = get_all_quizzes()
+            ratings = get_all_ratings()
             if quizzes is None:
                 flash("No quizzes found")
                 return redirect(url_for('index'))
-            return render_template('ratings.html', quizzes=quizzes)
+            return render_template('ratings.html', quizzes=quizzes, ratings=ratings)
         else:
             quiz = get_quiz(quiz_name)
             if quiz is None:
@@ -113,9 +117,6 @@ def rate_quiz(quiz_name=None):
                 return redirect(url_for('index'))
             return render_template('ratings.html', quizzes=quiz)
     if request.method == 'POST':
-        if not session.get('user_id'):
-            flash('You must be logged in to submit ratings.')
-            return redirect(url_for('login'))
         quiz_id = get_quizzes_by_name(request.form['quiz_name'])['id']
         rating_text = request.form.get('rating_text')
         stars = request.form.get('stars')
@@ -126,9 +127,6 @@ def rate_quiz(quiz_name=None):
         else:
             flash('All fields are required!')
             return redirect(url_for('rate_quiz'))
-    quizzes = get_all_quizzes()
-    ratings = get_all_ratings()
-    return render_template('ratings.html', quizzes=quizzes, ratings=ratings)
 
 
 @app.route('/take-quiz', methods=['POST'])
