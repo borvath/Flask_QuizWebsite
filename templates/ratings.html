@@ -26,7 +26,7 @@
     <label for="quiz_name">Quiz Name:</label>
     <select id="quiz_name" name="quiz_name">
         {% for quiz in quizzes %}
-        <option value="{{ quiz.name}}">{{ quiz.name }}</option>
+        <option value="{{ quiz.name }}">{{ quiz.name }}</option>
         {% endfor %}
     </select>
 
@@ -46,6 +46,7 @@
 </form>
 
 <!-- Ratings Table -->
+{% if quizzes %}
 <table>
     <tr>
         <th>Course</th>
@@ -59,6 +60,7 @@
         <td>{{ quiz.name }}</td>
         <td colspan="2">Ratings:</td>
     </tr>
+    {% if ratings %}
     {% for rating in ratings if rating.quiz_id == quiz.id %}
     <tr>
         <td colspan="2"></td>
@@ -67,13 +69,17 @@
     </tr>
     {% else %}
     <tr>
-        <td colspan="4">No ratings available.</td>
+        <td colspan="4">No ratings available for this quiz.</td>
     </tr>
     {% endfor %}
     {% else %}
     <tr>
-        <td colspan="4">No quizzes available to rate.</td>
+        <td colspan="4">No ratings available.</td>
     </tr>
+    {% endif %}
     {% endfor %}
 </table>
+{% else %}
+<p>No quizzes available to rate.</p>
+{% endif %}
 {% endblock %}
