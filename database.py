@@ -53,4 +53,3 @@ def execute_non_select_statement(query, values) -> int:
 
 
 db = connect_to_database('unprivileged', 'unprivileged_password')
-

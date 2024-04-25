@@ -34,7 +34,7 @@ def attempt_login(data: dict) -> bool:
 
 def change_connected_user():
     if "user_type" in session:
-        if session["user_type"] in ['student', 'teacher']:
+        if session["user_type"] in ['student']:
             change_db_connection('user', 'user_password')
         elif session["user_type"] in ['admin']:
             change_db_connection('admin', 'admin_password')

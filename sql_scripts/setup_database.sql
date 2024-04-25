@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS quizmaker;
 CREATE DATABASE IF NOT EXISTS quizmaker;
 USE quizmaker;
 
@@ -10,15 +11,6 @@ CREATE TABLE IF NOT EXISTS user (
     type ENUM('teacher', 'student', 'admin') NOT NULL,
     PRIMARY KEY(id),
     UNIQUE INDEX username_UNIQUE (username ASC) VISIBLE
-);
-
-CREATE TABLE IF NOT EXISTS course (
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
-    section INT NOT NULL,
-    teacher_id INT UNSIGNED NOT NULL,
-    PRIMARY KEY (id),
-    CONSTRAINT teacher_id FOREIGN KEY (teacher_id) REFERENCES user(id)  ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS quiz (

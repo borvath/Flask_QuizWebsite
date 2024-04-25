@@ -16,7 +16,7 @@ class RegisterForm(FlaskForm):
     type = SelectField(
         label='type',
         validators=[InputRequired()],
-        choices=[('student', 'student'), ('teacher', 'teacher'), ('admin', 'admin')]
+        choices=[('student', 'student'), ('admin', 'admin')]
     )
     first_name = StringField(
         label='first_name',
@@ -45,7 +45,7 @@ class LoginForm(FlaskForm):
     type = SelectField(
         label='type',
         validators=[InputRequired()],
-        choices=[('student', 'student'), ('teacher', 'teacher'), ('admin', 'admin')]
+        choices=[('student', 'student'), ('admin', 'admin')]
     )
     username = StringField(
         label='username',
